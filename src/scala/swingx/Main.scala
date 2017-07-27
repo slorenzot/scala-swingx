@@ -6,13 +6,16 @@ package scala.swingx
 object Main {
 
   def main(args: Array[String]): Unit = {
-    val frame = Frame(new swingexamples.Frame)
+    val frame = Frame[swingexamples.Frame](new swingexamples.Frame)
     frame
       .title("ventana de prueba")
       .display
 
-    val dialog = Dialog(new swingexamples.Dialog(null, true))
-    dialog.display
+    val dialog = Dialog[swingexamples.Dialog](new swingexamples.Dialog(null, true))
+    dialog
+      .title("Dialog de prueba")
+      .center()
+      .display
   }
 
 }

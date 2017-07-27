@@ -1,5 +1,7 @@
 package scala.swingx
 
+import java.awt.Component
+
 /**
   * Created by Soulberto on 7/27/2017.
   */
@@ -7,6 +9,11 @@ case class Dialog[T](val view: javax.swing.JDialog) extends WindowImpl {
 
   def title(title: String): Dialog[T] = {
     view.setTitle(title)
+    this
+  }
+
+  def center(parent: Component = null): Dialog[T] = {
+    view.setLocationRelativeTo(parent)
     this
   }
 
