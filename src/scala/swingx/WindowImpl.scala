@@ -17,10 +17,4 @@ trait WindowImpl {
 
   def dispose
 
-  def maximize: Unit = {}
-
-  def minimize: Unit = {}
-
-  def restore: Unit = {}
-
 }

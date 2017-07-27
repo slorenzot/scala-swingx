@@ -9,6 +9,7 @@ object Main {
     val frame = Frame[swingexamples.Frame](new swingexamples.Frame)
     frame
       .title("ventana de prueba")
+      .maximize
       .display
 
     val dialog = Dialog[swingexamples.Dialog](new swingexamples.Dialog(null, true))

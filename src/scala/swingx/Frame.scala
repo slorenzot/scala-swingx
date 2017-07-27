@@ -1,16 +1,26 @@
 package scala.swingx
 
+import java.awt.event.{WindowEvent, WindowStateListener}
+
 /**
   * Created by Soulberto on 7/27/2017.
   */
 case class Frame[T](val view: javax.swing.JFrame) extends WindowImpl {
+
+  var previousState: Integer = view.getExtendedState
+
+  view.addWindowStateListener(new WindowStateListener {
+    override def windowStateChanged(windowEvent: WindowEvent) = {
+      previousState = windowEvent.getNewState
+    }
+  })
 
   def title(title: String): Frame[T] = {
     view.setTitle(title)
     this
   }
 
-  override def display(): Unit = {
+  override def display: Unit = {
     this.defaultLAF(view)
 
     view.pack
@@ -19,10 +29,29 @@ case class Frame[T](val view: javax.swing.JFrame) extends WindowImpl {
     view.requestFocusInWindow
   }
 
-  override def dispose(): Unit = {
+  override def dispose: Unit = {
     view.dispose
   }
 
-  def fullscreen(): Unit = {}
+  def fullscreen: Unit = {}
+
+  def maximize: Frame[T] = {
+    previousState = view.getExtendedState
+    view.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH)
+    this
+  }
+
+  def minimize: Frame[T] = {
+    previousState = view.getExtendedState
+    view.setExtendedState(java.awt.Frame.ICONIFIED)
+    this
+  }
+
+  def restore: Frame[T] = {
+    val current = view.getExtendedState
+    view.setExtendedState(previousState)
+    previousState = current
+    this
+  }
 
 }
