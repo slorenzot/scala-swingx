@@ -1,8 +1,7 @@
 package scala.swingx
 
-import java.awt.Image
 import java.awt.event.{WindowEvent, WindowStateListener}
-import javax.swing.{Icon, ImageIcon}
+import javax.swing.ImageIcon
 
 /**
   * Created by Soulberto on 7/27/2017.
@@ -64,7 +63,9 @@ case class Frame[T](val view: javax.swing.JFrame) extends Window {
 }
 
 object Frame {
+
   def of[T](component: javax.swing.JFrame): Frame[T] = {
     new Frame[T](component);
   }
+
 }

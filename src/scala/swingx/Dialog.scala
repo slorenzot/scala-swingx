@@ -1,19 +1,22 @@
 package scala.swingx
 
-import java.awt.{Component, Image}
-import javax.swing.{Icon, ImageIcon}
+import java.awt.Component
+import javax.swing.ImageIcon
 
 /**
   * Created by Soulberto on 7/27/2017.
   */
 case class Dialog[T](val view: javax.swing.JDialog) extends Window {
 
+//  var parent: Window = view
+
   def title(title: String): Dialog[T] = {
     view.setTitle(title)
     this
   }
 
-  def icon(icon: Icon): Dialog[T] = {
+  def icon(icon: ImageIcon): Dialog[T] = {
+    view.setIconImage(icon.getImage)
     this
   }
 
@@ -36,15 +39,12 @@ case class Dialog[T](val view: javax.swing.JDialog) extends Window {
     view.dispose
   }
 
-//  def buttonAction(button: JButton, event: => {}): Dialog = {
-//
-//    this
-//  }
-
 }
 
 object Dialog {
+
   def of[T](component: javax.swing.JDialog): Dialog[T] = {
     new Dialog[T](component);
   }
+
 }
