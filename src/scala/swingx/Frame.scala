@@ -1,5 +1,6 @@
 package scala.swingx
 
+import java.awt.Component
 import java.awt.event.{WindowEvent, WindowStateListener}
 import javax.swing.ImageIcon
 
@@ -57,6 +58,11 @@ case class Frame[T](val view: javax.swing.JFrame) extends Window {
     val current = view.getExtendedState
     view.setExtendedState(previousState)
     previousState = current
+    this
+  }
+
+  def bind[U](component: javax.swing.JComponent, action: => {}): Frame[T] = {
+    Binding.bind(component, action)
     this
   }
 

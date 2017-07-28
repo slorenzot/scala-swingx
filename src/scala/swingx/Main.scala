@@ -17,7 +17,7 @@ object Main extends App {
     .icon(Image.file("/resources/icons/default.png").toIcon)
     .title("Dialog de prueba")
     .center()
-//      .bind(dialog.jButton1).click(() => println("click"))
+    .bind(dialog.jButton1, () => {})
     .display
 
 }
