@@ -6,15 +6,14 @@ import javax.swing.{SwingUtilities, UIManager}
 /**
   * Created by Soulberto on 7/27/2017.
   */
-trait WindowImpl {
+trait Window {
 
   def defaultLAF(container: Component): Unit = {
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
     SwingUtilities.updateComponentTreeUI(container)
   }
 
-  def display
-
-  def dispose
+  def display: Unit
+  def dispose: Unit
 
 }

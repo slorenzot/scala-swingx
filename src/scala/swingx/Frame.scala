@@ -1,11 +1,13 @@
 package scala.swingx
 
+import java.awt.Image
 import java.awt.event.{WindowEvent, WindowStateListener}
+import javax.swing.{Icon, ImageIcon}
 
 /**
   * Created by Soulberto on 7/27/2017.
   */
-case class Frame[T](val view: javax.swing.JFrame) extends WindowImpl {
+case class Frame[T](val view: javax.swing.JFrame) extends Window {
 
   var previousState: Integer = view.getExtendedState
 
@@ -20,7 +22,12 @@ case class Frame[T](val view: javax.swing.JFrame) extends WindowImpl {
     this
   }
 
-  override def display: Unit = {
+  def icon(icon: ImageIcon): Frame[T] = {
+    view.setIconImage(icon.getImage)
+    this
+  }
+
+  def display: Unit = {
     this.defaultLAF(view)
 
     view.pack
@@ -29,7 +36,7 @@ case class Frame[T](val view: javax.swing.JFrame) extends WindowImpl {
     view.requestFocusInWindow
   }
 
-  override def dispose: Unit = {
+  def dispose: Unit = {
     view.dispose
   }
 
@@ -54,4 +61,10 @@ case class Frame[T](val view: javax.swing.JFrame) extends WindowImpl {
     this
   }
 
+}
+
+object Frame {
+  def of[T](component: javax.swing.JFrame): Frame[T] = {
+    new Frame[T](component);
+  }
 }
