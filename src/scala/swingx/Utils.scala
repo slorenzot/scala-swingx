@@ -24,15 +24,24 @@ object Utils {
       Image.file(ERROR_ICON).toIcon)
   }
 
-  def confirm(message: String, title: String = "Confirmar", component: Component = null, yes: Int = 0): Int = {
-    JOptionPane.showConfirmDialog(component, message, title, JOptionPane.YES_NO_CANCEL_OPTION, yes,
+  def confirm(message: String,
+              title: String = "Confirmar",
+              component: Component = null): Int = {
+    JOptionPane.showConfirmDialog(component, message, title, JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
       Image.file(CONFIRM_ICON).toIcon)
   }
 
-
-  def confirmCancel(message: String, title: String = "Confirmar", component: Component = null, yes: Int = 0): Int = {
-    JOptionPane.showConfirmDialog(component, message, title, JOptionPane.YES_NO_CANCEL_OPTION, yes,
+  def confirmCancel(message: String,
+                    title: String = "Confirmar",
+                    component: Component = null): Int = {
+    JOptionPane.showConfirmDialog(component, message, title, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
       Image.file(CONFIRM_ICON).toIcon)
+  }
+
+  def input(message: String,
+            title: String = "Ingrese",
+            component: Component = null): String = {
+    JOptionPane.showInputDialog(component, message, title, JOptionPane.QUESTION_MESSAGE)
   }
 
 }
