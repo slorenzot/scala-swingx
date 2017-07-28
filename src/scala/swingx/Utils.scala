@@ -10,21 +10,29 @@ import scala.reflect.io.File
   */
 object Utils {
 
-  def alert(message: String, title: String = "Alert", component: Component = null): Unit =
+  val WARNING_ICON = "/resources/icons/Warning_48px.png"
+  val CONFIRM_ICON = "/resources/icons/Help_48px.png"
+  val ERROR_ICON = "/resources/icons/Error_48px.png"
+
+  def alert(message: String, title: String = "Alert", component: Component = null): Unit = {
     JOptionPane.showMessageDialog(component, message, title, JOptionPane.WARNING_MESSAGE,
-      Image.file("/resources/icons/Warning_48px.png").toIcon)
+      Image.file(WARNING_ICON).toIcon)
+  }
 
-  def error(message: String, title: String = "Alert", component: Component = null): Unit =
+  def error(message: String, title: String = "Alert", component: Component = null): Unit = {
     JOptionPane.showMessageDialog(component, message, title, JOptionPane.ERROR_MESSAGE,
-      Image.file("/resources/icons/Error_48px.png").toIcon)
+      Image.file(ERROR_ICON).toIcon)
+  }
 
-  def confirm(message: String, title: String = "Confirmar", component: Component = null, yes: Int = 0): Unit =
+  def confirm(message: String, title: String = "Confirmar", component: Component = null, yes: Int = 0): Int = {
     JOptionPane.showConfirmDialog(component, message, title, JOptionPane.YES_NO_CANCEL_OPTION, yes,
-      Image.file("/resources/icons/Help_48px.png").toIcon)
+      Image.file(CONFIRM_ICON).toIcon)
+  }
 
 
-  def confirmCancel(message: String, title: String = "Confirmar", component: Component = null, yes: Int = 0): Unit =
+  def confirmCancel(message: String, title: String = "Confirmar", component: Component = null, yes: Int = 0): Int = {
     JOptionPane.showConfirmDialog(component, message, title, JOptionPane.YES_NO_CANCEL_OPTION, yes,
-      Image.file("/resources/icons/Help_48px.png").toIcon)
+      Image.file(CONFIRM_ICON).toIcon)
+  }
 
 }

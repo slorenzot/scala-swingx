@@ -8,11 +8,11 @@ object Main extends App {
 
   val event = () => println("click en button")
 
-  Frame.of(new swingexamples.Frame)
-    .icon(icon)
-    .title("Ventana de prueba")
-    .maximize
-    .display
+//  Frame.of(new swingexamples.Frame)
+//    .icon(icon)
+//    .title("Ventana de prueba")
+//    .maximize
+//    .display
 
   val dialog: swingexamples.Dialog = new swingexamples.Dialog(null, true)
   Dialog.of(dialog)
@@ -26,6 +26,10 @@ object Main extends App {
 
   Utils.alert("Hola")
   Utils.error("Error")
-  Utils.confirm("Pregunta")
+  Utils.confirm("Pregunta") match {
+    case OptionDialog.YES => println("yes")
+    case OptionDialog.NO => println("no")
+    case OptionDialog.CANCEL => println("cancel")
+  }
 
 }
