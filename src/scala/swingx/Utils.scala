@@ -7,12 +7,7 @@ import scala.reflect.io.File
   */
 object Utils {
 
-  def load: Unit = {
-//    val file = File(loader.getResource("images/pic.jpg").getFile())
-    val file = File("images/icon.png")
-  };
-
-  def bind[T](component: Object): Unit = {
+  def bind[T](component: Option[Object] = Option(null)): Unit = {
 
   }
 
