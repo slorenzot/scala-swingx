@@ -7,12 +7,12 @@ object Main extends App {
 
   Frame.of(new swingexamples.Frame)
     .icon(Image.file("/resources/icons/default.png").toIcon)
-    .title("ventana de prueba")
+    .title("Ventana de prueba")
     .maximize
     .display
 
   Dialog.of(new swingexamples.Dialog(null, true))
-//      .from(window)
+    //      .from(window)
     .icon(Image.file("/resources/icons/default.png").toIcon)
     .title("Dialog de prueba")
     .center()
