@@ -25,5 +25,7 @@ object Main extends App {
     .display
 
   Utils.alert("Hola")
+  Utils.error("Error")
+  Utils.confirm("Pregunta")
 
 }
