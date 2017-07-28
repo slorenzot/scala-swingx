@@ -77,7 +77,7 @@ case class Dialog[T](val view: javax.swing.JDialog) extends Window {
   def dispose(): Unit = view.dispose
 
   def bind[U](component: javax.swing.JComponent, action: => {}): Dialog[T] = {
-    Binding.bind(component, action)
+    Binding.bind(component, () => action)
     this
   }
 

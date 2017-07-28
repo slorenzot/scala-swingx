@@ -1,7 +1,7 @@
 package scala.swingx
 
 import java.awt.Component
-import javax.swing.{ImageIcon, JOptionPane}
+import javax.swing.{ImageIcon, JDialog, JOptionPane}
 
 import scala.reflect.io.File
 
@@ -40,8 +40,19 @@ object Utils {
 
   def input(message: String,
             title: String = "Ingrese",
-            component: Component = null): String = {
-    JOptionPane.showInputDialog(component, message, title, JOptionPane.QUESTION_MESSAGE)
+            component: Component = null): Option[String] = {
+    Option(JOptionPane.showInputDialog(component, message, title, JOptionPane.QUESTION_MESSAGE,
+      Image.file(CONFIRM_ICON).toIcon))
+    val pane = new JOptionPane(
+      "Message",
+      JOptionPane.QUESTION_MESSAGE,
+      JOptionPane.DEFAULT_OPTION
+    )
+
+    val dialog = pane.createDialog("Dialog Title")
+
+    dialog.setIconImage(Image.file(CONFIRM_ICON))
+    dialog.setVisible(true)
   }
 
 }
