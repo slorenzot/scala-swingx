@@ -11,7 +11,21 @@ case class Binding[T](val swingComponent: Component) {
     case "class javax.swing.JButton" => println("Es un boton")
     case _ => println("No se reconoce el tipo")
   }
-  
+
+  def click(e: => {}) = {}
+
+  def change(e: => {}) = {}
+
+  def enter(e: => {}) = {}
+
+  def over(e: => {}) = {}
+
+  def out(e: => {}) = {}
+
+  def select(e: => {}) = {}
+
+  def unselect(e: => {}) = {}
+
 }
 
 object Binding {
