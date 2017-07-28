@@ -15,7 +15,7 @@ object Main extends App {
     //      .from(window)
     .icon(Image.file("/resources/icons/default.png").toIcon)
     .title("Dialog de prueba")
-    .center()
+//    .center()
     .display
 
 }

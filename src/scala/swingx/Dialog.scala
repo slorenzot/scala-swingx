@@ -9,6 +9,8 @@ import javax.swing.{ImageIcon, JComponent, KeyStroke, WindowConstants}
   */
 case class Dialog[T](val view: javax.swing.JDialog) extends Window {
 
+  var parent: Component = null
+
   var okEvent = () => println("OK")
   var cancelEvent = () => println("Cancelled by user")
 
@@ -31,10 +33,11 @@ case class Dialog[T](val view: javax.swing.JDialog) extends Window {
     * Centra la ventana de dialogo al componente indicado, si no
     * se indica ningun componente centra en pantalla
     *
-    * @param parent
+    * @param parentTo
     * @return
     */
-  def center(parent: Component = null): Dialog[T] = {
+  def center(parentTo: java.awt.Component = null): Dialog[T] = {
+    parent = parentTo
     view.setLocationRelativeTo(parent)
     this
   }
@@ -64,8 +67,8 @@ case class Dialog[T](val view: javax.swing.JDialog) extends Window {
     }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
     view.pack
-    view.setLocationRelativeTo(null)
     view.setModal(true)
+    view.setLocationRelativeTo(parent)
     view.setVisible(true)
     view.toFront
     view.requestFocusInWindow
