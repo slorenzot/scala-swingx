@@ -68,22 +68,18 @@ case class Dialog[T](val view: javax.swing.JDialog) extends Window {
 
     view.pack
     view.setModal(true)
-    view.setLocationRelativeTo(parent)
+//    view.setLocationRelativeTo(parent)
     view.setVisible(true)
     view.toFront
     view.requestFocusInWindow
   }
 
-  def dispose(): Unit = {
-    view.dispose
-  }
+  def dispose(): Unit = view.dispose
 
 }
 
 object Dialog {
 
-  def of[T](component: javax.swing.JDialog): Dialog[T] = {
-    new Dialog[T](component);
-  }
+  def of[T](component: javax.swing.JDialog): Dialog[T] = new Dialog[T](component)
 
 }

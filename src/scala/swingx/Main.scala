@@ -11,11 +11,13 @@ object Main extends App {
     .maximize
     .display
 
-  Dialog.of(new swingexamples.Dialog(null, true))
+  val dialog: swingexamples.Dialog = new swingexamples.Dialog(null, true)
+  Dialog.of(dialog)
     //      .from(window)
     .icon(Image.file("/resources/icons/default.png").toIcon)
     .title("Dialog de prueba")
-//    .center()
+    .center()
+//      .bind(dialog.jButton1).click(() => println("click"))
     .display
 
 }
