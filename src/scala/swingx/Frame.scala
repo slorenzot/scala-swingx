@@ -4,94 +4,96 @@ import java.awt.event.{WindowAdapter, WindowEvent, WindowStateListener}
 import javax.swing.{ImageIcon, WindowConstants}
 
 import scala.swingx.binding.Binding
+import scala.swingx.utils.{SwingConstants, SwingUtils}
 
 /**
   * Created by Soulberto on 7/27/2017.
   */
-case class Frame(view: javax.swing.JFrame) extends Window {
+case class Frame(swingComponent: javax.swing.JFrame) extends Window {
 
-  var previousState: Integer = view.getExtendedState
+  var lastState: Integer = swingComponent.getExtendedState
 
-  view.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
+  swingComponent.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
 
-  view.addWindowStateListener(new WindowStateListener {
+  swingComponent.addWindowStateListener(new WindowStateListener {
     override def windowStateChanged(windowEvent: WindowEvent) = {
-      previousState = windowEvent.getNewState
+      lastState = windowEvent.getOldState
+      println(lastState)
     }
   })
 
   def title(title: String): Frame = {
-    view.setTitle(title)
+    swingComponent.setTitle(title)
     this
   }
 
   def icon(icon: ImageIcon): Frame = {
-    view.setIconImage(icon.getImage)
+    swingComponent.setIconImage(icon.getImage)
     this
   }
 
   def show: Unit = this.display
 
   def display: Unit = {
-    this.defaultLAF(view)
+    this.defaultLAF(swingComponent)
 
-    view.pack
-    view.setVisible(true)
-    view.toFront
-    view.requestFocusInWindow
+    swingComponent.pack
+    swingComponent.setVisible(true)
+    swingComponent.toFront
+    swingComponent.requestFocusInWindow
   }
 
-  def dispose: Unit = view.dispose
+  def dispose: Unit = swingComponent.dispose
 
 
   def fullscreen: Unit = {}
 
   def maximize: Frame = {
-    previousState = view.getExtendedState
-    view.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH)
+    lastState = swingComponent.getExtendedState
+    swingComponent.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH)
     this
   }
 
   def minimize: Frame = {
-    previousState = view.getExtendedState
-    view.setExtendedState(java.awt.Frame.ICONIFIED)
+    lastState = swingComponent.getExtendedState
+    swingComponent.setExtendedState(java.awt.Frame.ICONIFIED)
     this
   }
 
   def restore: Frame = {
-    val current = view.getExtendedState
-    view.setExtendedState(previousState)
-    previousState = current
+    val current = swingComponent.getExtendedState
+    swingComponent.setExtendedState(lastState)
+    lastState = current
     this
   }
 
   def opened(action: (javax.swing.JFrame) => Unit): Frame = {
-    view.addWindowListener(new WindowAdapter() {
-      override def windowOpened(e: WindowEvent): Unit = action.apply(view)
+    swingComponent.addWindowListener(new WindowAdapter() {
+      override def windowOpened(e: WindowEvent): Unit = action.apply(swingComponent)
     })
     this
   }
 
-  def confirmClosing(dialog: (String, String, java.awt.Component) => Int = SwingUtils.confirm): Frame = {
-    view.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
+  def confirmClosing(dialog: () => Int = () => SwingUtils.confirm("Do you want exit?", "Confirm exit", null)): Frame = {
+    swingComponent.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
 
-    view.addWindowListener(new WindowAdapter() {
+    swingComponent.addWindowListener(new WindowAdapter() {
       override def windowClosing(e: WindowEvent): Unit =
-        if (dialog.apply("Do you want exit?", "Confirm exit", view) == OptionDialog.YES) dispose
+        if (dialog.apply() == SwingConstants.YES) dispose
     })
     this
   }
 
   def closing(action: (javax.swing.JFrame) => Unit): Frame = {
-    view.addWindowListener(new WindowAdapter() {
-      override def windowClosing(e: WindowEvent): Unit = action.apply(view)
+    swingComponent.addWindowListener(new WindowAdapter() {
+      override def windowClosing(e: WindowEvent): Unit = action.apply(swingComponent)
     })
     this
   }
 
   def closed(action: (javax.swing.JFrame) => Unit): Frame = {
-    view.addWindowListener(new WindowAdapter() {
-      override def windowClosing(e: WindowEvent): Unit = action.apply(view)
+    swingComponent.addWindowListener(new WindowAdapter() {
+      override def windowClosing(e: WindowEvent): Unit = action.apply(swingComponent)
     })
     this
   }

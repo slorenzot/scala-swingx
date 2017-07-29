@@ -3,6 +3,7 @@ package scala.swingx
 import java.awt.event.ActionEvent
 
 import scala.swingx.binding.ButtonBinding
+import scala.swingx.utils.{SwingConstants, SwingUtils}
 
 /**
   * Created by Soulberto on 7/27/2017.
@@ -19,6 +20,7 @@ object Main extends App {
       println("Button 1 click")
     })
     .confirmClosing()
+//    .confirmClosing(() => SwingUtils.confirm("Confirma que desea salir?", "Confirmar salida", null))
     .opened(source => println(s"Opened Windows $source"))
     .closed(source => println(s"Closed Windows $source"))
     //    .maximize
@@ -34,16 +36,16 @@ object Main extends App {
       SwingUtils.alert("Hi")
       SwingUtils.error("Error")
       val option = SwingUtils.confirm("Some question") match {
-        case OptionDialog.YES => println("yes")
-        case OptionDialog.NO => println("no")
+        case SwingConstants.YES => println("yes")
+        case SwingConstants.NO => println("no")
         case _ => println("Cancelled by User")
       }
     })
     .bind(dialog.jButton2, () => {
       SwingUtils.confirmCancel("Some question") match {
-        case OptionDialog.YES => println("yes")
-        case OptionDialog.NO => println("no")
-        case OptionDialog.CANCEL => println("cancel")
+        case SwingConstants.YES => println("yes")
+        case SwingConstants.NO => println("no")
+        case SwingConstants.CANCEL => println("cancel")
         case _ =>
       }
 

@@ -1,9 +1,9 @@
-package scala.swingx
+package scala.swingx.utils
 
 import java.awt.Component
-import javax.swing.{ImageIcon, JDialog, JOptionPane, UIManager}
+import javax.swing.JOptionPane
 
-import scala.reflect.io.File
+import scala.swingx.Image
 
 /**
   * Created by Soulberto Lorenzo on 7/27/2017.
