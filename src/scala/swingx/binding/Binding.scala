@@ -12,28 +12,18 @@ case class Binding[T](swingComponent: T,
 
   swingComponent.getClass.toString match {
     case "class javax.swing.JButton" => {
-      println("XXX")
-      swingComponent
-        .asInstanceOf[JButton]
+      swingComponent.asInstanceOf[JButton]
         .addActionListener(new ActionListener {
           override def actionPerformed(event: ActionEvent) = defaultAction.apply()
         })
     }
-    case _ => println("No se reconoce el tipo")
+    case _ => println(s"Not supported Component!")
   }
 
-  def click(e: => {}) = {}
+}
 
-  def change(e: => {}) = {}
-
-  def enter(e: => {}) = {}
-
-  def over(e: => {}) = {}
-
-  def out(e: => {}) = {}
-
-  def select(e: => {}) = {}
-
-  def unselect(e: => {}) = {}
-
+object Binding {
+  def of[T](swingComponent: T) = {
+    new Binding[T](swingComponent, () => this)
+  }
 }

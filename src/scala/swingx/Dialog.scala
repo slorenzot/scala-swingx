@@ -45,7 +45,6 @@ case class Dialog(val view: javax.swing.JDialog) extends Window {
     * Centra la ventana de dialogo al componente indicado, si no
     * se indica ningun componente centra en pantalla
     *
-    * @param parentTo
     * @return
     */
   def center(): Dialog = {
@@ -79,7 +78,6 @@ case class Dialog(val view: javax.swing.JDialog) extends Window {
 
     view.pack
     view.setModal(true)
-    parent.map(p => view.setLocationRelativeTo(p))
     view.setVisible(true)
     view.toFront
     view.requestFocusInWindow
