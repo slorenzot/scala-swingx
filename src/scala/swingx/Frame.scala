@@ -4,10 +4,12 @@ import java.awt.Component
 import java.awt.event.{WindowEvent, WindowStateListener}
 import javax.swing.ImageIcon
 
+import scala.swingx.binding.Binding
+
 /**
   * Created by Soulberto on 7/27/2017.
   */
-case class Frame[T](val view: javax.swing.JFrame) extends Window {
+case class Frame(val view: javax.swing.JFrame) extends Window {
 
   var previousState: Integer = view.getExtendedState
 
@@ -17,12 +19,12 @@ case class Frame[T](val view: javax.swing.JFrame) extends Window {
     }
   })
 
-  def title(title: String): Frame[T] = {
+  def title(title: String): Frame = {
     view.setTitle(title)
     this
   }
 
-  def icon(icon: ImageIcon): Frame[T] = {
+  def icon(icon: ImageIcon): Frame = {
     view.setIconImage(icon.getImage)
     this
   }
@@ -42,36 +44,35 @@ case class Frame[T](val view: javax.swing.JFrame) extends Window {
 
   def fullscreen: Unit = {}
 
-  def maximize: Frame[T] = {
+  def maximize: Frame = {
     previousState = view.getExtendedState
     view.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH)
     this
   }
 
-  def minimize: Frame[T] = {
+  def minimize: Frame = {
     previousState = view.getExtendedState
     view.setExtendedState(java.awt.Frame.ICONIFIED)
     this
   }
 
-  def restore: Frame[T] = {
+  def restore: Frame = {
     val current = view.getExtendedState
     view.setExtendedState(previousState)
     previousState = current
     this
   }
 
-//  def bind[U](component: javax.swing.JComponent, action: => {}): Frame[T] = {
-//    Binding.bind(component, action)
-//    this
-//  }
+  def bind[U](component: U, action: () => {}): Frame = {
+
+    new Binding(component, action)
+    this
+  }
 
 }
 
 object Frame {
 
-  def of[T](component: javax.swing.JFrame): Frame[T] = {
-    new Frame[T](component);
-  }
+  def of(component: javax.swing.JFrame): Frame = new Frame(component);
 
 }

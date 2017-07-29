@@ -1,4 +1,4 @@
-package scala.swingx
+package scala.swingx.binding
 
 import java.awt.Component
 import java.awt.event.{ActionEvent, ActionListener}
@@ -7,15 +7,17 @@ import javax.swing.JButton
 /**
   * Created by Soulberto Lorenzo on 7/27/2017.
   */
-case class Binding[T](val swingComponent: Component,
-                      val defaultAction: () => {}) {
+case class Binding[T](swingComponent: T,
+                      defaultAction: () => {}) {
 
   swingComponent.getClass.toString match {
     case "class javax.swing.JButton" => {
-      val button = swingComponent.asInstanceOf[JButton]
-      button.addActionListener(new ActionListener {
-        override def actionPerformed(actionEvent: ActionEvent) = defaultAction.apply()
-      })
+      println("XXX")
+      swingComponent
+        .asInstanceOf[JButton]
+        .addActionListener(new ActionListener {
+          override def actionPerformed(event: ActionEvent) = defaultAction.apply()
+        })
     }
     case _ => println("No se reconoce el tipo")
   }
@@ -33,11 +35,5 @@ case class Binding[T](val swingComponent: Component,
   def select(e: => {}) = {}
 
   def unselect(e: => {}) = {}
-
-}
-
-object Binding {
-
-  def bind[T](component: javax.swing.JComponent, action: () => {}): Binding[T] = new Binding(component, action)
 
 }

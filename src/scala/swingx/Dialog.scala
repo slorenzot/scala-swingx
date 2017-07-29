@@ -7,14 +7,24 @@ import javax.swing.{ImageIcon, JComponent, KeyStroke, WindowConstants}
 /**
   * Created by Soulberto on 7/27/2017.
   */
-case class Dialog[T](val view: javax.swing.JDialog) extends Window {
+case class Dialog(val view: javax.swing.JDialog) extends Window {
 
   var parent: Component = null
 
   var okEvent = () => println("OK")
   var cancelEvent = () => println("Cancelled by user")
 
-  def title(title: String): Dialog[T] = {
+  def from(component: javax.swing.JFrame): Dialog = {
+    parent = component
+    this
+  }
+
+  def from(component: javax.swing.JDialog): Dialog = {
+    parent = component
+    this
+  }
+
+  def title(title: String): Dialog = {
     view.setTitle(title)
     this
   }
@@ -24,7 +34,7 @@ case class Dialog[T](val view: javax.swing.JDialog) extends Window {
     * @param icon imagen en formato ImageIcon
     * @return
     */
-  def icon(icon: ImageIcon): Dialog[T] = {
+  def icon(icon: ImageIcon): Dialog = {
     view.setIconImage(icon.getImage)
     this
   }
@@ -36,7 +46,7 @@ case class Dialog[T](val view: javax.swing.JDialog) extends Window {
     * @param parentTo
     * @return
     */
-  def center(parentTo: java.awt.Component = null): Dialog[T] = {
+  def center(parentTo: java.awt.Component = null): Dialog = {
     parent = parentTo
     view.setLocationRelativeTo(parent)
     this
@@ -76,15 +86,10 @@ case class Dialog[T](val view: javax.swing.JDialog) extends Window {
 
   def dispose(): Unit = view.dispose
 
-  def bind[U](component: javax.swing.JComponent, action: => {}): Dialog[T] = {
-    Binding.bind(component, () => action)
-    this
-  }
-
 }
 
 object Dialog {
 
-  def of[T](component: javax.swing.JDialog): Dialog[T] = new Dialog[T](component)
+  def of(component: javax.swing.JDialog): Dialog = new Dialog(component)
 
 }
