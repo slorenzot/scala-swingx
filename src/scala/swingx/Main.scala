@@ -19,7 +19,7 @@ object Main extends App {
       println("click en Button 1")
       this
     })
-    .maximize
+//    .maximize
     .display
 
   val dialog: swingexamples.Dialog = new swingexamples.Dialog(null, true)
@@ -53,7 +53,7 @@ object Main extends App {
       }
       this
     })
-    .center()
+    .center
     .display
 
 }

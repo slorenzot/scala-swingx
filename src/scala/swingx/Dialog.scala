@@ -11,18 +11,18 @@ import scala.swingx.binding.Binding
   */
 case class Dialog(val view: javax.swing.JDialog) extends Window {
 
-  var parent: Component = null
+  var parent: Option[Component] = Option(null)
 
   var okEvent = () => println("OK")
   var cancelEvent = () => println("Cancelled by user")
 
   def from(component: javax.swing.JFrame): Dialog = {
-    parent = component
+    parent = Option(component)
     this
   }
 
   def from(component: javax.swing.JDialog): Dialog = {
-    parent = component
+    parent = Option(component)
     this
   }
 
@@ -48,9 +48,8 @@ case class Dialog(val view: javax.swing.JDialog) extends Window {
     * @param parentTo
     * @return
     */
-  def center(parentTo: java.awt.Component = null): Dialog = {
-    parent = parentTo
-    view.setLocationRelativeTo(parent)
+  def center(): Dialog = {
+    parent.map(p => view.setLocationRelativeTo(p))
     this
   }
 
@@ -80,7 +79,7 @@ case class Dialog(val view: javax.swing.JDialog) extends Window {
 
     view.pack
     view.setModal(true)
-//    view.setLocationRelativeTo(parent)
+    parent.map(p => view.setLocationRelativeTo(p))
     view.setVisible(true)
     view.toFront
     view.requestFocusInWindow
