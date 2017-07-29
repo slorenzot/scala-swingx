@@ -18,7 +18,10 @@ object Main extends App {
     .bind(window.jButton1, () => {
       println("Button 1 click")
     })
-//    .maximize
+    .confirmClosing()
+    .opened(source => println(s"Opened Windows $source"))
+    .closed(source => println(s"Closed Windows $source"))
+    //    .maximize
     .display
 
   val dialog: swingexamples.Dialog = new swingexamples.Dialog(null, true)
@@ -28,25 +31,25 @@ object Main extends App {
     .icon(icon)
     .title("Dialog Window")
     .bind(dialog.jButton1, () => {
-      Utils.alert("Hi")
-      Utils.error("Error")
-      val option = Utils.confirm("Some question") match {
+      SwingUtils.alert("Hi")
+      SwingUtils.error("Error")
+      val option = SwingUtils.confirm("Some question") match {
         case OptionDialog.YES => println("yes")
         case OptionDialog.NO => println("no")
         case _ => println("Cancelled by User")
       }
     })
     .bind(dialog.jButton2, () => {
-      Utils.confirmCancel("Some question") match {
+      SwingUtils.confirmCancel("Some question") match {
         case OptionDialog.YES => println("yes")
         case OptionDialog.NO => println("no")
         case OptionDialog.CANCEL => println("cancel")
         case _ =>
       }
 
-      Utils.input("What is your age?", "Input value") match {
-        case Some(s) => if (s.isEmpty) Utils.alert(s"Lo siento, no suministro su edad") else Utils.alert(s"Usted tiene ${s}")
-        case None => Utils.alert(s"Lo siento, no suministro su edad")
+      SwingUtils.input("What is your age?", "Input value") match {
+        case Some(s) => if (s.isEmpty) SwingUtils.alert(s"Lo siento, no suministro su edad") else SwingUtils.alert(s"Usted tiene ${s}")
+        case None => SwingUtils.alert(s"Lo siento, no suministro su edad")
       }
     })
     .center

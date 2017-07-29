@@ -8,7 +8,7 @@ import scala.reflect.io.File
 /**
   * Created by Soulberto Lorenzo on 7/27/2017.
   */
-object Utils {
+object SwingUtils {
 
   val WARNING_ICON = "/resources/icons/Warning_48px.png"
   val CONFIRM_ICON = "/resources/icons/Help_48px.png"
@@ -41,8 +41,6 @@ object Utils {
   def input(message: String,
             title: String = "Input Value",
             component: Component = null): Option[String] = {
-    //    Option(JOptionPane.showInputDialog(component, message, title, JOptionPane.QUESTION_MESSAGE,
-    //      Image.file(CONFIRM_ICON).toIcon))
     val input = JOptionPane.showInputDialog(component, message, title, JOptionPane.QUESTION_MESSAGE,
       Image.file(CONFIRM_ICON).toIcon, null, null);
     Option(input.asInstanceOf[String])

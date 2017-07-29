@@ -1,17 +1,18 @@
 package scala.swingx
 
-import java.awt.Component
-import java.awt.event.{WindowEvent, WindowStateListener}
-import javax.swing.ImageIcon
+import java.awt.event.{WindowAdapter, WindowEvent, WindowStateListener}
+import javax.swing.{ImageIcon, WindowConstants}
 
 import scala.swingx.binding.Binding
 
 /**
   * Created by Soulberto on 7/27/2017.
   */
-case class Frame(val view: javax.swing.JFrame) extends Window {
+case class Frame(view: javax.swing.JFrame) extends Window {
 
   var previousState: Integer = view.getExtendedState
+
+  view.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
 
   view.addWindowStateListener(new WindowStateListener {
     override def windowStateChanged(windowEvent: WindowEvent) = {
@@ -61,6 +62,37 @@ case class Frame(val view: javax.swing.JFrame) extends Window {
     val current = view.getExtendedState
     view.setExtendedState(previousState)
     previousState = current
+    this
+  }
+
+  def opened(action: (javax.swing.JFrame) => Unit): Frame = {
+    view.addWindowListener(new WindowAdapter() {
+      override def windowOpened(e: WindowEvent): Unit = action.apply(view)
+    })
+    this
+  }
+
+  def confirmClosing(dialog: (String, String, java.awt.Component) => Int = SwingUtils.confirm): Frame = {
+    view.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
+
+    view.addWindowListener(new WindowAdapter() {
+      override def windowClosing(e: WindowEvent): Unit =
+        if (dialog.apply("Do you want exit?", "Confirm exit", view) == OptionDialog.YES) dispose
+    })
+    this
+  }
+
+  def closing(action: (javax.swing.JFrame) => Unit): Frame = {
+    view.addWindowListener(new WindowAdapter() {
+      override def windowClosing(e: WindowEvent): Unit = action.apply(view)
+    })
+    this
+  }
+
+  def closed(action: (javax.swing.JFrame) => Unit): Frame = {
+    view.addWindowListener(new WindowAdapter() {
+      override def windowClosing(e: WindowEvent): Unit = action.apply(view)
+    })
     this
   }
 
