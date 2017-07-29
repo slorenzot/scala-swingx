@@ -44,6 +44,10 @@ case class Frame(swingComponent: javax.swing.JFrame) extends Window {
 
   def dispose: Unit = swingComponent.dispose
 
+  def center: Frame = {
+    swingComponent.setLocationRelativeTo(null)
+    this
+  }
 
   def fullscreen: Unit = {}
 

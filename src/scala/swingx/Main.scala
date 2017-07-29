@@ -21,9 +21,10 @@ object Main extends App {
     })
     .confirmClosing()
     //    .confirmClosing(() => SwingUtils.confirm("Confirma que desea salir?", "Confirmar salida", null))
-    .opened(source => println(s"Opened Windows $source"))
-    .closed(source => println(s"Closed Windows $source"))
+    .opened(source => println(s"Opened Windows!"))
+    .closed(source => println(s"Closed Windows!"))
     //    .maximize
+    .center
     .display
 
   val dialog: swingexamples.Dialog = new swingexamples.Dialog(null, true)
