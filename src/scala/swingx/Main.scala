@@ -20,7 +20,7 @@ object Main extends App {
       println("Button 1 click")
     })
     .confirmClosing()
-//    .confirmClosing(() => SwingUtils.confirm("Confirma que desea salir?", "Confirmar salida", null))
+    //    .confirmClosing(() => SwingUtils.confirm("Confirma que desea salir?", "Confirmar salida", null))
     .opened(source => println(s"Opened Windows $source"))
     .closed(source => println(s"Closed Windows $source"))
     //    .maximize

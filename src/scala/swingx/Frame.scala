@@ -18,7 +18,6 @@ case class Frame(swingComponent: javax.swing.JFrame) extends Window {
   swingComponent.addWindowStateListener(new WindowStateListener {
     override def windowStateChanged(windowEvent: WindowEvent) = {
       lastState = windowEvent.getOldState
-      println(lastState)
     }
   })
 
@@ -61,9 +60,9 @@ case class Frame(swingComponent: javax.swing.JFrame) extends Window {
   }
 
   def restore: Frame = {
-    val current = swingComponent.getExtendedState
+    val state = swingComponent.getExtendedState
     swingComponent.setExtendedState(lastState)
-    lastState = current
+    lastState = state
     this
   }
 
