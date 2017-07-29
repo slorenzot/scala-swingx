@@ -8,7 +8,7 @@ import javax.swing.JButton
   * Created by Soulberto Lorenzo on 7/27/2017.
   */
 case class Binding[T](swingComponent: T,
-                      defaultAction: () => {}) {
+                      defaultAction: () => Unit) {
 
   swingComponent.getClass.toString match {
     case "class javax.swing.JButton" => {
@@ -24,6 +24,6 @@ case class Binding[T](swingComponent: T,
 
 object Binding {
   def of[T](swingComponent: T) = {
-    new Binding[T](swingComponent, () => this)
+    new Binding[T](swingComponent, () => Unit)
   }
 }

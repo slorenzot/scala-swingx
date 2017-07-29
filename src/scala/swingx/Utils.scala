@@ -1,7 +1,7 @@
 package scala.swingx
 
 import java.awt.Component
-import javax.swing.{ImageIcon, JDialog, JOptionPane}
+import javax.swing.{ImageIcon, JDialog, JOptionPane, UIManager}
 
 import scala.reflect.io.File
 
@@ -25,34 +25,27 @@ object Utils {
   }
 
   def confirm(message: String,
-              title: String = "Confirmar",
+              title: String = "Confirm",
               component: Component = null): Int = {
     JOptionPane.showConfirmDialog(component, message, title, JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
       Image.file(CONFIRM_ICON).toIcon)
   }
 
   def confirmCancel(message: String,
-                    title: String = "Confirmar",
+                    title: String = "Confirm",
                     component: Component = null): Int = {
     JOptionPane.showConfirmDialog(component, message, title, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
       Image.file(CONFIRM_ICON).toIcon)
   }
 
   def input(message: String,
-            title: String = "Ingrese",
+            title: String = "Input Value",
             component: Component = null): Option[String] = {
-    Option(JOptionPane.showInputDialog(component, message, title, JOptionPane.QUESTION_MESSAGE,
-      Image.file(CONFIRM_ICON).toIcon))
-//    val pane = new JOptionPane(
-//      "Message",
-//      JOptionPane.QUESTION_MESSAGE,
-//      JOptionPane.DEFAULT_OPTION
-//    )
-//
-//    val dialog = pane.createDialog("Dialog Title")
-//
-//    dialog.setIconImage(new ImageIcon(Image.file(CONFIRM_ICON)))
-//    dialog.setVisible(true)
+    //    Option(JOptionPane.showInputDialog(component, message, title, JOptionPane.QUESTION_MESSAGE,
+    //      Image.file(CONFIRM_ICON).toIcon))
+    val input = JOptionPane.showInputDialog(component, message, title, JOptionPane.QUESTION_MESSAGE,
+      Image.file(CONFIRM_ICON).toIcon, null, null);
+    Option(input.asInstanceOf[String])
   }
 
 }

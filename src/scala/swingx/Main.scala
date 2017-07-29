@@ -14,10 +14,9 @@ object Main extends App {
 
   Frame.of(window)
     .icon(icon)
-    .title("Ventana de prueba")
+    .title("Main Window")
     .bind(window.jButton1, () => {
-      println("click en Button 1")
-      this
+      println("Button 1 click")
     })
 //    .maximize
     .display
@@ -27,31 +26,28 @@ object Main extends App {
   Dialog.of(dialog)
     .from(window)
     .icon(icon)
-    .title("Dialog de prueba")
+    .title("Dialog Window")
     .bind(dialog.jButton1, () => {
-      Utils.alert("Hola")
+      Utils.alert("Hi")
       Utils.error("Error")
-      Utils.confirm("Pregunta") match {
+      val option = Utils.confirm("Some question") match {
         case OptionDialog.YES => println("yes")
         case OptionDialog.NO => println("no")
-        case _ =>
+        case _ => println("Cancelled by User")
       }
-
-      this
     })
     .bind(dialog.jButton2, () => {
-      Utils.confirmCancel("Pregunta") match {
+      Utils.confirmCancel("Some question") match {
         case OptionDialog.YES => println("yes")
         case OptionDialog.NO => println("no")
         case OptionDialog.CANCEL => println("cancel")
         case _ =>
       }
 
-      Utils.input("Indique su edad", "Ingrese una valor") match {
+      Utils.input("What is your age?", "Input value") match {
         case Some(s) => if (s.isEmpty) Utils.alert(s"Lo siento, no suministro su edad") else Utils.alert(s"Usted tiene ${s}")
         case None => Utils.alert(s"Lo siento, no suministro su edad")
       }
-      this
     })
     .center
     .display

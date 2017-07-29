@@ -29,6 +29,8 @@ case class Frame(val view: javax.swing.JFrame) extends Window {
     this
   }
 
+  def show: Unit = this.display
+
   def display: Unit = {
     this.defaultLAF(view)
 
@@ -38,9 +40,8 @@ case class Frame(val view: javax.swing.JFrame) extends Window {
     view.requestFocusInWindow
   }
 
-  def dispose: Unit = {
-    view.dispose
-  }
+  def dispose: Unit = view.dispose
+
 
   def fullscreen: Unit = {}
 
@@ -63,7 +64,7 @@ case class Frame(val view: javax.swing.JFrame) extends Window {
     this
   }
 
-  def bind[U](component: U, action: () => {}): Frame = {
+  def bind[U](component: U, action: () => Unit): Frame = {
     new Binding(component, action)
     this
   }
