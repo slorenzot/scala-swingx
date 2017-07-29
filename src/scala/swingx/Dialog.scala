@@ -4,6 +4,8 @@ import java.awt.Component
 import java.awt.event._
 import javax.swing.{ImageIcon, JComponent, KeyStroke, WindowConstants}
 
+import scala.swingx.binding.Binding
+
 /**
   * Created by Soulberto on 7/27/2017.
   */
@@ -85,6 +87,11 @@ case class Dialog(val view: javax.swing.JDialog) extends Window {
   }
 
   def dispose(): Unit = view.dispose
+
+  def bind[U](component: U, action: () => {}): Dialog = {
+    new Binding(component, action)
+    this
+  }
 
 }
 

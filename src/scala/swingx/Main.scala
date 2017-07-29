@@ -24,8 +24,11 @@ object Main extends App {
 
   val dialog: swingexamples.Dialog = new swingexamples.Dialog(null, true)
 
-  ButtonBinding(dialog.jButton1)
-    .click(binding => {
+  Dialog.of(dialog)
+    .from(window)
+    .icon(icon)
+    .title("Dialog de prueba")
+    .bind(dialog.jButton1, () => {
       Utils.alert("Hola")
       Utils.error("Error")
       Utils.confirm("Pregunta") match {
@@ -36,9 +39,7 @@ object Main extends App {
 
       this
     })
-
-  ButtonBinding(dialog.jButton2)
-    .click(binding => {
+    .bind(dialog.jButton2, () => {
       Utils.confirmCancel("Pregunta") match {
         case OptionDialog.YES => println("yes")
         case OptionDialog.NO => println("no")
@@ -52,14 +53,7 @@ object Main extends App {
       }
       this
     })
-
-  Dialog.of(dialog)
-    .from(window)
-    .icon(icon)
-    .title("Dialog de prueba")
     .center()
-    //    .bind(dialog.jButton1, () => println("click en button"))
-    //    .bind(dialog.jButton2, () => println("click en button"))
     .display
 
 }

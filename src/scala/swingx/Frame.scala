@@ -64,7 +64,6 @@ case class Frame(val view: javax.swing.JFrame) extends Window {
   }
 
   def bind[U](component: U, action: () => {}): Frame = {
-
     new Binding(component, action)
     this
   }
