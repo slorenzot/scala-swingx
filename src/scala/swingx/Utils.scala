@@ -43,16 +43,16 @@ object Utils {
             component: Component = null): Option[String] = {
     Option(JOptionPane.showInputDialog(component, message, title, JOptionPane.QUESTION_MESSAGE,
       Image.file(CONFIRM_ICON).toIcon))
-    val pane = new JOptionPane(
-      "Message",
-      JOptionPane.QUESTION_MESSAGE,
-      JOptionPane.DEFAULT_OPTION
-    )
-
-    val dialog = pane.createDialog("Dialog Title")
-
-    dialog.setIconImage(Image.file(CONFIRM_ICON))
-    dialog.setVisible(true)
+//    val pane = new JOptionPane(
+//      "Message",
+//      JOptionPane.QUESTION_MESSAGE,
+//      JOptionPane.DEFAULT_OPTION
+//    )
+//
+//    val dialog = pane.createDialog("Dialog Title")
+//
+//    dialog.setIconImage(new ImageIcon(Image.file(CONFIRM_ICON)))
+//    dialog.setVisible(true)
   }
 
 }
