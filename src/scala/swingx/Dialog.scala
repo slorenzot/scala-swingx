@@ -104,6 +104,11 @@ case class Dialog[T <: javax.swing.JDialog](val swingComponent: T,
     this
   }
 
+  def terminate[U](proc: (T) => Unit): Dialog[T] = {
+    _finalize = proc
+    this
+  }
+
   /** Alias para dispose
     *
     */
@@ -112,7 +117,12 @@ case class Dialog[T <: javax.swing.JDialog](val swingComponent: T,
   /** Cierra la ventana de dialogo
     *
     */
-  def dispose(): Unit = swingComponent.dispose
+  def dispose(): Unit = {
+    try _finalize.apply(swingComponent) catch {
+      case e: Exception => println(e)
+    }
+    swingComponent.dispose
+  }
 
   def bind[U <: javax.swing.JComponent](component: U, action: () => Unit): Dialog[T] = {
     new Binding[U](component, action)

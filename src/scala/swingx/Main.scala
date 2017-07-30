@@ -18,9 +18,10 @@ object Main extends App {
     })
     .confirmClosing()
     //    .confirmClosing(() => SwingUtils.confirm("Confirma que desea salir?", "Confirmar salida", null))
-    .prepare(f => println(f.jButton1))
+    .prepare(f => println(s"preparing $f..."))
+    .terminate(f => println(s"terminating $f..."))
     .opened(f => println(s"Opened Windows ${f}..."))
-    .closing(f => println(s"Clsing Window ${f}..."))
+    .closing(f => println(s"Closing Window ${f}..."))
     .closed(f => println(s"Closed Windows ${f}..."))
     //    .maximize
     .center
@@ -57,10 +58,12 @@ object Main extends App {
       }
     })
     .prepare(d => {
-      1/ 0
+      println(s"preparing $d...")
+      1 / 0
       println(d.jButton1)
       println(d.jButton2)
     })
+    .terminate(f => println(s"terminating $f..."))
     .center
     .display
 

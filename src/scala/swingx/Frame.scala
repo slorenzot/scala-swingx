@@ -53,7 +53,12 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
 
   def close(confirm: Boolean = false): Unit = if (confirm) confirmClosing() else dispose
 
-  def dispose: Unit = swingComponent.dispose
+  def dispose: Unit = {
+    try _finalize.apply(swingComponent) catch {
+      case e: Exception => println(e)
+    }
+    swingComponent.dispose
+  }
 
   def center: Frame[T] = {
     swingComponent.setLocationRelativeTo(null)
@@ -114,6 +119,11 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
 
   def prepare[U](proc: (T) => Unit): Frame[T] = {
     _initialize = proc
+    this
+  }
+
+  def terminate[U](proc: (T) => Unit): Frame[T] = {
+    _finalize = proc
     this
   }
 
