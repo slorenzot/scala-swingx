@@ -9,20 +9,20 @@ import scala.swingx.binding.Binding
 /**
   * Created by Soulberto on 7/27/2017.
   */
-case class Dialog(val swingComponent: javax.swing.JDialog,
-                  var parent: Option[Component] = Option(null)) extends Window {
+case class Dialog[T <: javax.swing.JDialog](val swingComponent: T,
+                                            var parent: Option[Component] = Option(null)) extends Window {
 
-  private var _initialize: javax.swing.JDialog => Unit = swingComponent => Unit
+  private var _initialize: T => Unit = swingComponent => Unit
 
   private var _okEvent = () => println("OK")
   private var _cancelEvent = () => println("Cancelled by user")
 
-  def from(component: javax.swing.JFrame): Dialog = {
+  def from(component: javax.swing.JFrame): Dialog[T] = {
     parent = Option(component)
     this
   }
 
-  def from(component: javax.swing.JDialog): Dialog = {
+  def from(component: javax.swing.JDialog): Dialog[T] = {
     parent = Option(component)
     this
   }
@@ -32,7 +32,7 @@ case class Dialog(val swingComponent: javax.swing.JDialog,
     * @param title
     * @return
     */
-  def title(title: String): Dialog = {
+  def title(title: String): Dialog[T] = {
     swingComponent.setTitle(title)
     this
   }
@@ -42,7 +42,7 @@ case class Dialog(val swingComponent: javax.swing.JDialog,
     * @param icon imagen en formato ImageIcon
     * @return
     */
-  def icon(icon: ImageIcon): Dialog = {
+  def icon(icon: ImageIcon): Dialog[T] = {
     swingComponent.setIconImage(icon.getImage)
     this
   }
@@ -53,7 +53,7 @@ case class Dialog(val swingComponent: javax.swing.JDialog,
     *
     * @return
     */
-  def center(): Dialog = {
+  def center(): Dialog[T] = {
     parent.map(p => swingComponent.setLocationRelativeTo(p))
     this
   }
@@ -62,7 +62,7 @@ case class Dialog(val swingComponent: javax.swing.JDialog,
     *
     * @return
     */
-  def show(): Dialog = {
+  def show(): Dialog[T] = {
     display
     this
   }
@@ -101,9 +101,14 @@ case class Dialog(val swingComponent: javax.swing.JDialog,
     swingComponent.requestFocusInWindow
   }
 
+  def prepare(proc: T => Unit): Dialog[T] = {
+    _initialize = proc
+    this
+  }
+
   def dispose(): Unit = swingComponent.dispose
 
-  def bind[U](component: U, action: () => Unit): Dialog = {
+  def bind[U](component: U, action: () => Unit): Dialog[T] = {
     new Binding(component, action)
     this
   }
@@ -117,6 +122,6 @@ object Dialog {
     * @param component
     * @return
     */
-  def of(component: javax.swing.JDialog): Dialog = new Dialog(component)
+  def of[U <: javax.swing.JDialog](component: U): Dialog[U] = new Dialog[U](component)
 
 }

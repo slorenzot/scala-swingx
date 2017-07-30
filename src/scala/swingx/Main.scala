@@ -55,6 +55,10 @@ object Main extends App {
         case None => SwingUtils.alert(s"Lo siento, no suministro su edad")
       }
     })
+    .prepare(d => {
+      println(d.jButton1)
+      println(d.jButton2)
+    })
     .center
     .display
 

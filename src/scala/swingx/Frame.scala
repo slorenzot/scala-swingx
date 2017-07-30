@@ -11,7 +11,7 @@ import scala.swingx.utils.{SwingConstants, SwingUtils}
   * Created by Soulberto on 7/27/2017.
   */
 case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
-                 var parent: Option[Component] = Option(null)) extends Window {
+                                          var parent: Option[Component] = Option(null)) extends Window {
 
   protected var lastState: Integer = swingComponent.getExtendedState
   private var _initialize: T => Unit = swingComponent => Unit
@@ -118,7 +118,7 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
     this
   }
 
-//  def init(_initialize: (javax.swing.JFrame) => Unit = () => {}): Unit
+  //  def init(_initialize: (javax.swing.JFrame) => Unit = () => {}): Unit
 }
 
 object Frame {
