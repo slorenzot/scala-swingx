@@ -9,10 +9,10 @@ import scala.swingx.binding.Binding
 /**
   * Created by Soulberto on 7/27/2017.
   */
-case class Dialog(swingComponent: javax.swing.JDialog) extends Window {
+case class Dialog(val swingComponent: javax.swing.JDialog,
+                  var parent: Option[Component] = Option(null)) extends Window {
 
-  var parent: Option[Component] = Option(null)
-  private var initialize: javax.swing.JDialog => Unit = swingComponent => {}: Unit
+  private var initialize: javax.swing.JDialog => Unit = swingComponent => Unit
 
   var okEvent = () => println("OK")
   var cancelEvent = () => println("Cancelled by user")

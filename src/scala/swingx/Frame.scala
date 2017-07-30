@@ -1,5 +1,6 @@
 package scala.swingx
 
+import java.awt.Component
 import java.awt.event.{WindowAdapter, WindowEvent, WindowStateListener}
 import javax.swing.{ImageIcon, WindowConstants}
 
@@ -9,10 +10,11 @@ import scala.swingx.utils.{SwingConstants, SwingUtils}
 /**
   * Created by Soulberto on 7/27/2017.
   */
-case class Frame(swingComponent: javax.swing.JFrame) extends Window {
+case class Frame(val swingComponent: javax.swing.JFrame,
+                 var parent: Option[Component] = Option(null)) extends Window {
 
-  var lastState: Integer = swingComponent.getExtendedState
-  private var initialize: javax.swing.JFrame => Unit = swingComponent => {}: Unit
+  protected var lastState: Integer = swingComponent.getExtendedState
+  private var initialize: javax.swing.JFrame => Unit = swingComponent => Unit
 
   swingComponent.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
 
