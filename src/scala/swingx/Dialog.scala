@@ -108,8 +108,8 @@ case class Dialog[T <: javax.swing.JDialog](val swingComponent: T,
 
   def dispose(): Unit = swingComponent.dispose
 
-  def bind[U](component: U, action: () => Unit): Dialog[T] = {
-    new Binding(component, action)
+  def bind[U <: javax.swing.JComponent](component: U, action: () => Unit): Dialog[T] = {
+    new Binding[U](component, action)
     this
   }
 

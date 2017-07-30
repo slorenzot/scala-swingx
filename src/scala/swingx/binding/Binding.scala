@@ -23,7 +23,9 @@ case class Binding[T](swingComponent: T,
 }
 
 object Binding {
+
   def of[T](swingComponent: T) = {
     new Binding[T](swingComponent, () => Unit)
   }
+  
 }
