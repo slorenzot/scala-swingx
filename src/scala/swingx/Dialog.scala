@@ -1,21 +1,19 @@
 package scala.swingx
 
-import java.awt.Component
 import java.awt.event._
 import javax.swing.{ImageIcon, JComponent, KeyStroke, WindowConstants}
 
 import scala.swingx.binding.Binding
+import scala.swingx.utils.SwingConstants
 
 /**
   * Created by Soulberto on 7/27/2017.
   */
 case class Dialog[T <: javax.swing.JDialog](val swingComponent: T,
-                                            var parent: Option[Component] = Option(null)) extends Window {
+                                            var parent: Option[java.awt.Component] = Option(null)) extends Windowable {
 
   private var _initialize: T => Unit = swingComponent => Unit
-
-  private var _okEvent = () => println("OK")
-  private var _cancelEvent = () => println("Cancelled by user")
+  private var _finalize: T => Unit = swingComponent => Unit
 
   def from(component: javax.swing.JFrame): Dialog[T] = {
     parent = Option(component)
@@ -69,12 +67,13 @@ case class Dialog[T <: javax.swing.JDialog](val swingComponent: T,
 
   /** Muestra la ventana de dialogo. Realiza algunas acciones adicionales
     * como; setea la apariencia de swing a la usada por el Sistema Operativo,
-    * agrega comportamiento ESCAPE de teclado para cancelar la ventana, por
-    * defecto centra el dialogo en la ventana que lo invoco, trae el dialogo
-    * al frente y le da el foco.
+    * agrega comportamiento ESCAPE de teclado para cancelar la ventana, trae
+    * el dialogo al frente y le da el foco.
     */
   def display: Unit = {
-    _initialize.apply(swingComponent)
+    try _initialize.apply(swingComponent) catch {
+      case e: Exception => println(e)
+    }
 
     applySystemLAF(swingComponent)
 
@@ -82,15 +81,13 @@ case class Dialog[T <: javax.swing.JDialog](val swingComponent: T,
 
     swingComponent.addWindowListener(new WindowAdapter() {
       override def windowClosing(event: WindowEvent): Unit = {
-        dispose()
-        _cancelEvent()
+        cancel
       }
     })
 
     swingComponent.getRootPane.registerKeyboardAction(new ActionListener() {
       override def actionPerformed(event: ActionEvent): Unit = {
-        dispose()
-        _cancelEvent()
+        cancel
       }
     }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
@@ -99,13 +96,22 @@ case class Dialog[T <: javax.swing.JDialog](val swingComponent: T,
     swingComponent.setVisible(true)
     swingComponent.toFront
     swingComponent.requestFocusInWindow
+
   }
 
-  def prepare(proc: T => Unit): Dialog[T] = {
+  def prepare[U](proc: (T) => Unit): Dialog[T] = {
     _initialize = proc
     this
   }
 
+  /** Alias para dispose
+    *
+    */
+  def cancel(): Unit = dispose
+
+  /** Cierra la ventana de dialogo
+    *
+    */
   def dispose(): Unit = swingComponent.dispose
 
   def bind[U <: javax.swing.JComponent](component: U, action: () => Unit): Dialog[T] = {

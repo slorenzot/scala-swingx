@@ -6,15 +6,17 @@ import javax.swing.{ImageIcon, WindowConstants}
 
 import scala.swingx.binding.Binding
 import scala.swingx.utils.{SwingConstants, SwingUtils}
+import scala.util.Try
 
 /**
   * Created by Soulberto on 7/27/2017.
   */
 case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
-                                          var parent: Option[Component] = Option(null)) extends Window {
+                                          var parent: Option[Component] = Option(null)) extends Windowable {
 
   protected var lastState: Integer = swingComponent.getExtendedState
   private var _initialize: T => Unit = swingComponent => Unit
+  private var _finalize: T => Unit = swingComponent => Unit
 
   swingComponent.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
 
@@ -37,7 +39,9 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
   def show(): Unit = this.display
 
   def display: Unit = {
-    _initialize.apply(swingComponent)
+    try _initialize.apply(swingComponent) catch {
+      case e: Exception => println(e)
+    }
 
     applySystemLAF(swingComponent)
 
@@ -77,14 +81,14 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
     this
   }
 
-  def opened(action: (javax.swing.JFrame) => Unit): Frame[T] = {
+  def opened[U](action: (T) => Unit): Frame[T] = {
     swingComponent.addWindowListener(new WindowAdapter() {
       override def windowOpened(e: WindowEvent): Unit = action.apply(swingComponent)
     })
     this
   }
 
-  def confirmClosing(dialog: () => Int = () => SwingUtils.confirm("Do you want exit?", "Confirm exit", null)): Frame[T] = {
+  def confirmClosing[U](dialog: () => Int = () => SwingUtils.confirm("Do you want exit?", "Confirm exit", null)): Frame[T] = {
     swingComponent.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
 
     swingComponent.addWindowListener(new WindowAdapter() {
@@ -94,21 +98,21 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
     this
   }
 
-  def closing(action: (javax.swing.JFrame) => Unit): Frame[T] = {
+  def closing[U](action: (T) => Unit): Frame[T] = {
     swingComponent.addWindowListener(new WindowAdapter() {
       override def windowClosing(e: WindowEvent): Unit = action.apply(swingComponent)
     })
     this
   }
 
-  def closed(action: (javax.swing.JFrame) => Unit): Frame[T] = {
+  def closed[U](action: (T) => Unit): Frame[T] = {
     swingComponent.addWindowListener(new WindowAdapter() {
       override def windowClosing(e: WindowEvent): Unit = action.apply(swingComponent)
     })
     this
   }
 
-  def prepare(proc: T => Unit): Frame[T] = {
+  def prepare[U](proc: (T) => Unit): Frame[T] = {
     _initialize = proc
     this
   }

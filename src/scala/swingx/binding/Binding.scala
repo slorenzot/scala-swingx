@@ -14,7 +14,9 @@ case class Binding[T](swingComponent: T,
     case "class javax.swing.JButton" => {
       swingComponent.asInstanceOf[JButton]
         .addActionListener(new ActionListener {
-          override def actionPerformed(event: ActionEvent) = defaultAction.apply()
+          override def actionPerformed(event: ActionEvent) = try defaultAction.apply() catch {
+            case e: Exception => println(e)
+          }
         })
     }
     case _ => println(s"Not supported Component!")
@@ -27,5 +29,5 @@ object Binding {
   def of[T](swingComponent: T) = {
     new Binding[T](swingComponent, () => Unit)
   }
-  
+
 }

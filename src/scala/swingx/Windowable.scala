@@ -6,7 +6,7 @@ import javax.swing.{SwingUtilities, UIManager}
 /**
   * Created by Soulberto on 7/27/2017.
   */
-trait Window {
+trait Windowable {
 
   def applySystemLAF(container: Component): Unit = {
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
