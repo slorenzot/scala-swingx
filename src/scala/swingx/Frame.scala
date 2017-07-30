@@ -122,7 +122,6 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
     this
   }
 
-  //  def init(_initialize: (javax.swing.JFrame) => Unit = () => {}): Unit
 }
 
 object Frame {
