@@ -12,10 +12,10 @@ import scala.swingx.binding.Binding
 case class Dialog(val swingComponent: javax.swing.JDialog,
                   var parent: Option[Component] = Option(null)) extends Window {
 
-  private var initialize: javax.swing.JDialog => Unit = swingComponent => Unit
+  private var _initialize: javax.swing.JDialog => Unit = swingComponent => Unit
 
-  var okEvent = () => println("OK")
-  var cancelEvent = () => println("Cancelled by user")
+  private var _okEvent = () => println("OK")
+  private var _cancelEvent = () => println("Cancelled by user")
 
   def from(component: javax.swing.JFrame): Dialog = {
     parent = Option(component)
@@ -74,7 +74,7 @@ case class Dialog(val swingComponent: javax.swing.JDialog,
     * al frente y le da el foco.
     */
   def display: Unit = {
-    initialize.apply(swingComponent)
+    _initialize.apply(swingComponent)
 
     applySystemLAF(swingComponent)
 
@@ -83,14 +83,14 @@ case class Dialog(val swingComponent: javax.swing.JDialog,
     swingComponent.addWindowListener(new WindowAdapter() {
       override def windowClosing(event: WindowEvent): Unit = {
         dispose()
-        cancelEvent()
+        _cancelEvent()
       }
     })
 
     swingComponent.getRootPane.registerKeyboardAction(new ActionListener() {
       override def actionPerformed(event: ActionEvent): Unit = {
         dispose()
-        cancelEvent()
+        _cancelEvent()
       }
     }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 

@@ -18,7 +18,7 @@ object Main extends App {
     })
     .confirmClosing()
     //    .confirmClosing(() => SwingUtils.confirm("Confirma que desea salir?", "Confirmar salida", null))
-    .prepare((frame: javax.swing.JFrame) => println(frame))
+    .prepare(f => println(f.jButton1))
     .opened(s => println(s"Opened Windows!"))
     .closed(s => println(s"Closed Windows!"))
     //    .maximize
