@@ -12,6 +12,7 @@ import scala.swingx.utils.{SwingConstants, SwingUtils}
 case class Frame(swingComponent: javax.swing.JFrame) extends Window {
 
   var lastState: Integer = swingComponent.getExtendedState
+  var initialize: (javax.swing.JFrame) => Unit = (swingComponent) => println("Initialize Empty!"): Unit
 
   swingComponent.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
 
@@ -31,16 +32,20 @@ case class Frame(swingComponent: javax.swing.JFrame) extends Window {
     this
   }
 
-  def show: Unit = this.display
+  def show(): Unit = this.display
 
   def display: Unit = {
-    this.defaultLAF(swingComponent)
+    initialize.apply(swingComponent)
+
+    applySystemLAF(swingComponent)
 
     swingComponent.pack
     swingComponent.setVisible(true)
     swingComponent.toFront
     swingComponent.requestFocusInWindow
   }
+
+  def close(confirm: Boolean = false): Unit = if (confirm) confirmClosing() else dispose
 
   def dispose: Unit = swingComponent.dispose
 
@@ -106,6 +111,7 @@ case class Frame(swingComponent: javax.swing.JFrame) extends Window {
     this
   }
 
+//  def init(initialize: (javax.swing.JFrame) => Unit = () => {}): Unit
 }
 
 object Frame {

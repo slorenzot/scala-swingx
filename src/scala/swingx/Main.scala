@@ -17,12 +17,13 @@ object Main extends App {
     .icon(icon)
     .title("Main Window")
     .bind(window.jButton1, () => {
-      println("Button 1 click")
+      SwingUtils.alert("Button 1 click!")
     })
     .confirmClosing()
     //    .confirmClosing(() => SwingUtils.confirm("Confirma que desea salir?", "Confirmar salida", null))
-    .opened(source => println(s"Opened Windows!"))
-    .closed(source => println(s"Closed Windows!"))
+    // .initialize()
+    .opened(s => println(s"Opened Windows!"))
+    .closed(s => println(s"Closed Windows!"))
     //    .maximize
     .center
     .display
@@ -35,7 +36,9 @@ object Main extends App {
     .title("Dialog Window")
     .bind(dialog.jButton1, () => {
       SwingUtils.alert("Hi")
+
       SwingUtils.error("Error")
+
       val option = SwingUtils.confirm("Some question") match {
         case SwingConstants.YES => println("yes")
         case SwingConstants.NO => println("no")

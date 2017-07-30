@@ -9,9 +9,11 @@ import scala.swingx.binding.Binding
 /**
   * Created by Soulberto on 7/27/2017.
   */
-case class Dialog(val view: javax.swing.JDialog) extends Window {
+case class Dialog(swingComponent: javax.swing.JDialog) extends Window {
 
   var parent: Option[Component] = Option(null)
+
+  var initialize: (javax.swing.JDialog) => Unit = (swingComponent) => println("Initialize Empty!"): Unit
 
   var okEvent = () => println("OK")
   var cancelEvent = () => println("Cancelled by user")
@@ -27,7 +29,7 @@ case class Dialog(val view: javax.swing.JDialog) extends Window {
   }
 
   def title(title: String): Dialog = {
-    view.setTitle(title)
+    swingComponent.setTitle(title)
     this
   }
 
@@ -37,7 +39,7 @@ case class Dialog(val view: javax.swing.JDialog) extends Window {
     * @return
     */
   def icon(icon: ImageIcon): Dialog = {
-    view.setIconImage(icon.getImage)
+    swingComponent.setIconImage(icon.getImage)
     this
   }
 
@@ -48,7 +50,12 @@ case class Dialog(val view: javax.swing.JDialog) extends Window {
     * @return
     */
   def center(): Dialog = {
-    parent.map(p => view.setLocationRelativeTo(p))
+    parent.map(p => swingComponent.setLocationRelativeTo(p))
+    this
+  }
+
+  def show(): Dialog = {
+    display
     this
   }
 
@@ -59,31 +66,34 @@ case class Dialog(val view: javax.swing.JDialog) extends Window {
     * al frente y le da el foco.
     */
   def display: Unit = {
-    this.defaultLAF(view)
+    initialize.apply(swingComponent)
 
-    view.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
-    view.addWindowListener(new WindowAdapter() {
+    applySystemLAF(swingComponent)
+
+    swingComponent.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
+
+    swingComponent.addWindowListener(new WindowAdapter() {
       override def windowClosing(event: WindowEvent): Unit = {
         dispose()
         cancelEvent()
       }
     })
 
-    view.getRootPane.registerKeyboardAction(new ActionListener() {
+    swingComponent.getRootPane.registerKeyboardAction(new ActionListener() {
       override def actionPerformed(event: ActionEvent): Unit = {
         dispose()
         cancelEvent()
       }
     }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-    view.pack
-    view.setModal(true)
-    view.setVisible(true)
-    view.toFront
-    view.requestFocusInWindow
+    swingComponent.pack
+    swingComponent.setModal(true)
+    swingComponent.setVisible(true)
+    swingComponent.toFront
+    swingComponent.requestFocusInWindow
   }
 
-  def dispose(): Unit = view.dispose
+  def dispose(): Unit = swingComponent.dispose
 
   def bind[U](component: U, action: () => Unit): Dialog = {
     new Binding(component, action)
