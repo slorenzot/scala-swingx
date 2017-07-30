@@ -12,7 +12,7 @@ import scala.swingx.utils.{SwingConstants, SwingUtils}
 case class Frame(swingComponent: javax.swing.JFrame) extends Window {
 
   var lastState: Integer = swingComponent.getExtendedState
-  var initialize: (javax.swing.JFrame) => Unit = (swingComponent) => println("Initialize Empty!"): Unit
+  private var initialize: javax.swing.JFrame => Unit = swingComponent => {}: Unit
 
   swingComponent.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
 
@@ -103,6 +103,11 @@ case class Frame(swingComponent: javax.swing.JFrame) extends Window {
     swingComponent.addWindowListener(new WindowAdapter() {
       override def windowClosing(e: WindowEvent): Unit = action.apply(swingComponent)
     })
+    this
+  }
+
+  def prepare(proc: (javax.swing.JFrame) => Unit): Frame = {
+    initialize = proc
     this
   }
 

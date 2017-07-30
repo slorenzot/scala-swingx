@@ -12,8 +12,7 @@ import scala.swingx.binding.Binding
 case class Dialog(swingComponent: javax.swing.JDialog) extends Window {
 
   var parent: Option[Component] = Option(null)
-
-  var initialize: (javax.swing.JDialog) => Unit = (swingComponent) => println("Initialize Empty!"): Unit
+  private var initialize: javax.swing.JDialog => Unit = swingComponent => {}: Unit
 
   var okEvent = () => println("OK")
   var cancelEvent = () => println("Cancelled by user")
