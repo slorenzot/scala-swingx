@@ -1,8 +1,5 @@
 package scala.swingx
 
-import java.awt.event.ActionEvent
-
-import scala.swingx.binding.ButtonBinding
 import scala.swingx.utils.{SwingConstants, SwingUtils}
 
 /**

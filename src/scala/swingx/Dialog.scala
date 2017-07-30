@@ -27,6 +27,11 @@ case class Dialog(val swingComponent: javax.swing.JDialog,
     this
   }
 
+  /** Asigna el titulo a la ventana
+    *
+    * @param title
+    * @return
+    */
   def title(title: String): Dialog = {
     swingComponent.setTitle(title)
     this
@@ -53,6 +58,10 @@ case class Dialog(val swingComponent: javax.swing.JDialog,
     this
   }
 
+  /** Alias para display
+    *
+    * @return
+    */
   def show(): Dialog = {
     display
     this
@@ -103,6 +112,11 @@ case class Dialog(val swingComponent: javax.swing.JDialog,
 
 object Dialog {
 
+  /** Obtiene un objeto Dialog a partir de un javax.swing.JFrame
+    *
+    * @param component
+    * @return
+    */
   def of(component: javax.swing.JDialog): Dialog = new Dialog(component)
 
 }
