@@ -44,6 +44,9 @@ object Main extends App {
         case _ => println("Cancelled by User")
       }
     })
+      .bind(dialog.jButton1, () => {
+
+      })
     .bind(dialog.jButton2, () => {
       SwingUtils.confirmCancel("Some question") match {
         case SwingConstants.YES => println("yes")

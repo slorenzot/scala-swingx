@@ -1,3 +1,4 @@
+
 package scala.swingx.utils
 
 import java.awt.Component
