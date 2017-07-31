@@ -1,4 +1,4 @@
-package scala.swingx.binding
+package scala.swingx.binding.contract
 
 import java.awt.event.{ActionEvent, ActionListener}
 
@@ -7,12 +7,11 @@ import java.awt.event.{ActionEvent, ActionListener}
   */
 trait Clickable[T <: javax.swing.AbstractButton, U] {
 
-  def source: T = this.asInstanceOf[T]
-
-  def click(action: T => Unit): U = {
+  def click(source: T, action: () => Unit): U = {
     source.addActionListener(new ActionListener() {
-      override def actionPerformed(e: ActionEvent) = action.apply(source)
-    })
+        override def actionPerformed(e: ActionEvent) = action.apply()
+      })
+    
     this.asInstanceOf[U]
   }
 

@@ -136,6 +136,7 @@ object Dialog {
   /** Obtiene un objeto Dialog a partir de un javax.swing.JFrame
     *
     * @param component
+    * @tparam U
     * @return
     */
   def of[U <: javax.swing.JDialog](component: U): Dialog[U] = new Dialog[U](component)

@@ -1,9 +1,5 @@
 package scala.swingx.binding
 
-import java.awt.Component
-import java.awt.event.{ActionEvent, ActionListener}
-import javax.swing.JButton
-
 /**
   * Created by Soulberto Lorenzo on 7/27/2017.
   */
@@ -12,23 +8,27 @@ case class Binding[T](swingComponent: T,
 
   swingComponent.getClass.toString match {
     case "class javax.swing.JButton" => {
-      val source = swingComponent.asInstanceOf[javax.swing.JButton]
-      source
-        .addActionListener(new ActionListener {
-          override def actionPerformed(event: ActionEvent) = try action.apply() catch {
-            case e: Exception => println(e)
-          }
-        })
+      val button = new ButtonBinding(swingComponent.asInstanceOf[javax.swing.JButton])
+      button.click(action)
     }
-    case _ => println(s"Not supported Component!")
+    case "class javax.swing.JMenuItem" => {
+      val button = new MenuItemBinding(swingComponent.asInstanceOf[javax.swing.JMenuItem])
+      button.click(action)
+    }
+    case _ => println(s"=> ScalaSwingX No support Component: $swingComponent!")
   }
 
 }
 
 object Binding {
 
-  def of[T](swingComponent: T) = {
+  def of[T <: javax.swing.JComponent](swingComponent: T) = {
     new Binding[T](swingComponent, () => Unit)
+  }
+
+  def bind[U <: javax.swing.JComponent](component: U, action: () => Unit): U = {
+    new Binding[U](component, action)
+    component
   }
 
 }

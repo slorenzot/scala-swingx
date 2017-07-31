@@ -136,6 +136,12 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
 
 object Frame {
 
-  def of[U <: javax.swing.JFrame](component: U): Frame[U] = new Frame[U](component);
+  /** Obtiene un objeto Frame a partir de un javax.swing.JFrame
+    *
+    * @param component
+    * @tparam U
+    * @return
+    */
+  def of[U <: javax.swing.JFrame](component: U): Frame[U] = new Frame[U](component)
 
 }

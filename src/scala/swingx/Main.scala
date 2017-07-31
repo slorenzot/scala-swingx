@@ -1,5 +1,6 @@
 package scala.swingx
 
+import scala.swingx.binding.Binding
 import scala.swingx.utils.{SwingConstants, SwingUtils}
 
 /**
@@ -8,13 +9,55 @@ import scala.swingx.utils.{SwingConstants, SwingUtils}
 object Main extends App {
   val icon = Image.file("/resources/icons/default.png").toIcon
 
-  val window: swingexamples.Frame = new swingexamples.Frame()
+  val window: swingExample.Frame = new swingExample.Frame()
 
   Frame.of(window)
     .icon(icon)
     .title("Main Window")
+    .bind(window.jMenuItem1, () => println("ZZZ"))
     .bind(window.jButton1, () => {
-      SwingUtils.alert("Button 1 click!")
+      val dialog: swingExample.Dialog = new swingExample.Dialog(null, true)
+
+      Dialog.of(dialog)
+        .from(window)
+        .icon(icon)
+        .title("Dialog Window")
+        .bind(dialog.jButton1, () => {
+          SwingUtils.alert("Hi")
+
+          SwingUtils.error("Error")
+
+          val option = SwingUtils.confirm("Some question") match {
+            case SwingConstants.YES => println("yes")
+            case SwingConstants.NO => println("no")
+            case _ => println("Cancelled by User")
+          }
+        })
+        .bind(dialog.jButton1, () => {
+
+        })
+        .bind(dialog.jButton2, () => {
+          SwingUtils.confirmCancel("Some question") match {
+            case SwingConstants.YES => println("yes")
+            case SwingConstants.NO => println("no")
+            case SwingConstants.CANCEL => println("cancel")
+            case _ =>
+          }
+
+          SwingUtils.input("What is your age?", "Input value") match {
+            case Some(s) => if (s.isEmpty) SwingUtils.alert(s"Lo siento, no suministro su edad") else SwingUtils.alert(s"Usted tiene ${s}")
+            case None => SwingUtils.alert(s"Lo siento, no suministro su edad")
+          }
+        })
+        .prepare(d => {
+          println(s"preparing $d...")
+          1 / 0
+          println(d.jButton1)
+          println(d.jButton2)
+        })
+        .terminate(f => println(s"terminating $f..."))
+        .center
+        .display
     })
     .confirmClosing()
     //    .confirmClosing(() => SwingUtils.confirm("Confirma que desea salir?", "Confirmar salida", null))
@@ -24,49 +67,6 @@ object Main extends App {
     .closing(f => println(s"Closing Window ${f}..."))
     .closed(f => println(s"Closed Windows ${f}..."))
     //    .maximize
-    .center
-    .display
-
-  val dialog: swingexamples.Dialog = new swingexamples.Dialog(null, true)
-
-  Dialog.of(dialog)
-    .from(window)
-    .icon(icon)
-    .title("Dialog Window")
-    .bind(dialog.jButton1, () => {
-      SwingUtils.alert("Hi")
-
-      SwingUtils.error("Error")
-
-      val option = SwingUtils.confirm("Some question") match {
-        case SwingConstants.YES => println("yes")
-        case SwingConstants.NO => println("no")
-        case _ => println("Cancelled by User")
-      }
-    })
-      .bind(dialog.jButton1, () => {
-
-      })
-    .bind(dialog.jButton2, () => {
-      SwingUtils.confirmCancel("Some question") match {
-        case SwingConstants.YES => println("yes")
-        case SwingConstants.NO => println("no")
-        case SwingConstants.CANCEL => println("cancel")
-        case _ =>
-      }
-
-      SwingUtils.input("What is your age?", "Input value") match {
-        case Some(s) => if (s.isEmpty) SwingUtils.alert(s"Lo siento, no suministro su edad") else SwingUtils.alert(s"Usted tiene ${s}")
-        case None => SwingUtils.alert(s"Lo siento, no suministro su edad")
-      }
-    })
-    .prepare(d => {
-      println(s"preparing $d...")
-      1 / 0
-      println(d.jButton1)
-      println(d.jButton2)
-    })
-    .terminate(f => println(s"terminating $f..."))
     .center
     .display
 
