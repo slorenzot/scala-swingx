@@ -15,6 +15,8 @@ object Main extends App {
     .title("Main Window")
 //    .bind(component, (source, context) => {})
     .bind(window.jMenuItem1, () => SwingUtils.alert("Hi"))
+    .bind(window.jCheckBoxMenuItem1, () => SwingUtils.alert("Hi"))
+    .bind(window.jRadioButtonMenuItem1, () => SwingUtils.alert("Hi"))
     .bind(window.jButton1, () => {
       val dialog: swingExample.Dialog = new swingExample.Dialog(null, true)
 

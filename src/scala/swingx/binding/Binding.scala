@@ -11,7 +11,10 @@ case class Binding[T](swingComponent: T,
       val button = new ButtonBinding(swingComponent.asInstanceOf[javax.swing.JButton])
       button.click(action)
     }
-    case "class javax.swing.JMenuItem" => {
+
+    case "class javax.swing.JRadioButtonMenuItem" |
+         "class javax.swing.JCheckBoxMenuItem" |
+         "class javax.swing.JMenuItem" => {
       val button = new MenuItemBinding(swingComponent.asInstanceOf[javax.swing.JMenuItem])
       button.click(action)
     }
