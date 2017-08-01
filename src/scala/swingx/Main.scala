@@ -1,6 +1,5 @@
 package scala.swingx
 
-import scala.swingx.binding.Binding
 import scala.swingx.utils.{SwingConstants, SwingUtils}
 
 /**
@@ -14,7 +13,8 @@ object Main extends App {
   Frame.of(window)
     .icon(icon)
     .title("Main Window")
-    .bind(window.jMenuItem1, () => println("ZZZ"))
+//    .bind(component, (source, context) => {})
+    .bind(window.jMenuItem1, () => SwingUtils.alert("Hi"))
     .bind(window.jButton1, () => {
       val dialog: swingExample.Dialog = new swingExample.Dialog(null, true)
 
@@ -63,9 +63,9 @@ object Main extends App {
     //    .confirmClosing(() => SwingUtils.confirm("Confirma que desea salir?", "Confirmar salida", null))
     .prepare(f => println(s"preparing $f..."))
     .terminate(f => println(s"terminating $f..."))
-    .opened(f => println(s"Opened Windows ${f}..."))
-    .closing(f => println(s"Closing Window ${f}..."))
-    .closed(f => println(s"Closed Windows ${f}..."))
+    .opened(f => println(s"Opened Window $f..."))
+    .closing(f => println(s"Closing Window $f..."))
+    .closed(f => println(s"Closed Window $f..."))
     //    .maximize
     .center
     .display

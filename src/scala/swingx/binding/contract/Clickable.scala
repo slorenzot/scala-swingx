@@ -11,7 +11,7 @@ trait Clickable[T <: javax.swing.AbstractButton, U] {
     source.addActionListener(new ActionListener() {
         override def actionPerformed(e: ActionEvent) = action.apply()
       })
-    
+
     this.asInstanceOf[U]
   }
 
