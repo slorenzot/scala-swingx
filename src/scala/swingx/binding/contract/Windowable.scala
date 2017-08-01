@@ -1,4 +1,4 @@
-package scala.swingx
+package scala.swingx.binding.contract
 
 import java.awt.Component
 import javax.swing.{SwingUtilities, UIManager}

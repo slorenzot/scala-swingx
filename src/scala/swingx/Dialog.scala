@@ -4,6 +4,7 @@ import java.awt.event._
 import javax.swing.{ImageIcon, JComponent, KeyStroke, WindowConstants}
 
 import scala.swingx.binding.Binding
+import scala.swingx.binding.contract.Windowable
 import scala.swingx.utils.SwingConstants
 
 /**

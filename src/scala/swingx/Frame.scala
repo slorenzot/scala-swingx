@@ -5,6 +5,7 @@ import java.awt.event.{WindowAdapter, WindowEvent, WindowStateListener}
 import javax.swing.{ImageIcon, WindowConstants}
 
 import scala.swingx.binding.Binding
+import scala.swingx.binding.contract.Windowable
 import scala.swingx.utils.{SwingConstants, SwingUtils}
 import scala.util.Try
 
