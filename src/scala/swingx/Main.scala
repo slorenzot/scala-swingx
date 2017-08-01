@@ -78,5 +78,7 @@ object Main extends App {
   Binding.of(window.jCheckBoxMenuItem1).change(() => SwingUtils.alert("Hi"))
   Binding.of(window.jToggleButton1).click(() => SwingUtils.alert("Hi"))
 
+  Binding.of(window.jTextField1).select(selected => println(selected))
+
 
 }
