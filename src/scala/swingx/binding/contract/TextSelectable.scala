@@ -11,7 +11,18 @@ trait TextSelectable[T <: javax.swing.text.JTextComponent, U] extends Editable[T
     source.addCaretListener(new CaretListener() {
       override def caretUpdate(e: CaretEvent) = {
         val selection = source.getText.substring(Math.min(e.getDot, e.getMark), Math.max(e.getDot, e.getMark))
-        action.apply(selection)
+        if (selection.nonEmpty) action.apply(selection)
+      }
+    })
+
+    this.asInstanceOf[U]
+  }
+
+  protected def unselect(source: T, action: () => Unit): U = {
+    source.addCaretListener(new CaretListener() {
+      override def caretUpdate(e: CaretEvent) = {
+        val hasSelection = (e.getDot == e.getMark)
+        if (hasSelection) action.apply()
       }
     })
 

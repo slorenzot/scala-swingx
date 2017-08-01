@@ -7,11 +7,19 @@ import scala.swingx.binding.contract.{Editable, TextSelectable, Toggleable}
 /**
   * Created by Soulberto Lorenzo on 7/28/2017.
   */
-case class TextBinding(swingComponent: javax.swing.text.JTextComponent)
-  extends TextSelectable[javax.swing.text.JTextComponent, TextBinding] {
+case class TextBinding(swingComponent: javax.swing.JTextField)
+  extends TextSelectable[javax.swing.JTextField, TextBinding] {
 
-  def caret(action: () => Unit): TextBinding = super.caret(swingComponent, action)
+//  def caret(action: () => Unit): TextBinding = super.caret(swingComponent, action)
 
-  def select(action: (String) => Unit): TextBinding = super.select(swingComponent, action)
+  def select(action: (String) => Unit): TextBinding = {
+    super.select(swingComponent, action)
+    this
+  }
+
+  def unselect(action: () => Unit): TextBinding = {
+    super.unselect(swingComponent, action)
+    this
+  }
 
 }
