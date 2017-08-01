@@ -1,5 +1,6 @@
 package scala.swingx
 
+import scala.swingx.binding.{Binding, ButtonBinding, MenuCheckItemBinding}
 import scala.swingx.utils.{SwingConstants, SwingUtils}
 
 /**
@@ -13,10 +14,11 @@ object Main extends App {
   Frame.of(window)
     .icon(icon)
     .title("Main Window")
-//    .bind(component, (source, context) => {})
+    //    .bind(component, (source, context) => {})
     .bind(window.jMenuItem1, () => SwingUtils.alert("Hi"))
-    .bind(window.jCheckBoxMenuItem1, () => SwingUtils.alert("Hi"))
+//    .bind(window.jCheckBoxMenuItem1, () => SwingUtils.alert("Hi"))
     .bind(window.jRadioButtonMenuItem1, () => SwingUtils.alert("Hi"))
+    .bind(window.jToggleButton1, () => SwingUtils.alert("Hi"))
     .bind(window.jButton1, () => {
       val dialog: swingExample.Dialog = new swingExample.Dialog(null, true)
 
@@ -71,5 +73,10 @@ object Main extends App {
     //    .maximize
     .center
     .display
+
+  (new MenuCheckItemBinding(window.jCheckBoxMenuItem1)).change(() => SwingUtils.alert("Hi"))
+  Binding.of(window.jCheckBoxMenuItem1).change(() => SwingUtils.alert("Hi"))
+  Binding.of(window.jToggleButton1).click(() => SwingUtils.alert("Hi"))
+
 
 }

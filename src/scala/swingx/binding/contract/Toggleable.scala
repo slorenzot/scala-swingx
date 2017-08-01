@@ -1,12 +1,19 @@
 package scala.swingx.binding.contract
 
+import java.awt.event.{ItemEvent, ItemListener}
+
 /**
   * Created by Soulberto Lorenzo on 7/31/2017.
   */
-trait Toggleable[T <: javax.swing.JToggleButton, U] {
+trait Toggleable[T <: javax.swing.AbstractButton, U] {
 
-  def source: T = this.asInstanceOf[T]
+  protected def source: T = this.asInstanceOf[T]
 
-  def change(action: T => Unit)
+  protected def change(source: T, action: () => Unit): U = {
+    source.addItemListener(new ItemListener() {
+      override def itemStateChanged(e: ItemEvent) = action.apply()
+    })
+    this.asInstanceOf[U]
+  }
 
 }

@@ -7,7 +7,9 @@ import java.awt.event.{ActionEvent, ActionListener}
   */
 trait Clickable[T <: javax.swing.AbstractButton, U] {
 
-  def click(source: T, action: () => Unit): U = {
+  protected def source: T = this.asInstanceOf[T]
+
+  protected def click(source: T, action: () => Unit): U = {
     source.addActionListener(new ActionListener() {
         override def actionPerformed(e: ActionEvent) = action.apply()
       })
