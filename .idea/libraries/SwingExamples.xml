@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="SwingExamples">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/SwingExamples.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/SwingExample.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
