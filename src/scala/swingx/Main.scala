@@ -16,7 +16,7 @@ object Main extends App {
     .title("Main Window")
     //    .bind(component, (source, context) => {})
     .bind(window.jMenuItem1, () => SwingUtils.alert("Hi"))
-//    .bind(window.jCheckBoxMenuItem1, () => SwingUtils.alert("Hi"))
+    //    .bind(window.jCheckBoxMenuItem1, () => SwingUtils.alert("Hi"))
     .bind(window.jRadioButtonMenuItem1, () => SwingUtils.alert("Hi"))
     .bind(window.jToggleButton1, () => SwingUtils.alert("Hi"))
     .bind(window.jButton1, () => {
@@ -79,6 +79,7 @@ object Main extends App {
   Binding.of(window.jToggleButton1).click(() => SwingUtils.alert("Hi"))
 
   Binding.of(window.jTextField1)
+    .change(() => println("El texto cambio"))
     .select(selected => println(selected))
     .unselect(() => println("Vacio"))
 
