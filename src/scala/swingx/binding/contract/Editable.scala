@@ -8,7 +8,7 @@ import javax.swing.event.{CaretEvent, CaretListener}
   */
 trait Editable[T <: javax.swing.text.JTextComponent, U] {
 
-  protected def source: T = this.asInstanceOf[T]
+  private def source: T = this.asInstanceOf[T]
 
   private var text: String = ""
 

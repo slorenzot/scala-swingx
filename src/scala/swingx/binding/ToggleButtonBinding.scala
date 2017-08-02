@@ -1,5 +1,7 @@
 package scala.swingx.binding
 
+import javax.swing.JToggleButton
+
 import scala.swingx.binding.contract.{Clickable, ToggleButton}
 
 /**
@@ -14,6 +16,18 @@ case class ToggleButtonBinding(swingComponent: javax.swing.JToggleButton) extend
 
   def change(action: () => Unit): ToggleButtonBinding = {
     super.change(swingComponent, action)
+    this
+  }
+
+  def toggle(action: () => Unit): ToggleButtonBinding = this.change(action)
+
+  def selected(action: () => Unit): ToggleButtonBinding = {
+    super.selected(swingComponent, action)
+    this
+  }
+
+  def unselected(action: () => Unit): ToggleButtonBinding = {
+    super.unselected(swingComponent, action)
     this
   }
 
