@@ -2,6 +2,7 @@
 package scala.swingx.utils
 
 import java.awt.Component
+import java.util.Locale
 import javax.swing.JOptionPane
 
 import scala.swingx.Image
@@ -11,32 +12,50 @@ import scala.swingx.Image
   */
 object SwingUtils {
 
-  val WARNING_ICON = "/resources/icons/Warning_48px.png"
-  val CONFIRM_ICON = "/resources/icons/Help_48px.png"
-  val ERROR_ICON = "/resources/icons/Error_48px.png"
+  private val WARNING_ICON = "/resources/icons/Warning_48px.png"
+  private val CONFIRM_ICON = "/resources/icons/Help_48px.png"
+  private val ERROR_ICON = "/resources/icons/Error_48px.png"
 
-  def alert(message: String, title: String = "Alert", component: Component = null): Unit = {
-    JOptionPane.showMessageDialog(component, message, title, JOptionPane.WARNING_MESSAGE,
-      Image.file(WARNING_ICON).toIcon)
+  private val ALERT_BUTTON_TEXT = "OK"
+  private val ERROR_BUTTON_TEXT = ALERT_BUTTON_TEXT
+
+  private val YES_BUTTON_TEXT = "Yes"
+  private val NO_BUTTON_TEXT = "No"
+  private val CANCEL_BUTTON_TEXT = "Cancel"
+
+  def withLocale(locale: java.util.Locale = java.util.Locale.US) = {
+    Locale.setDefault(locale)
+    SwingUtils
   }
 
-  def error(message: String, title: String = "Alert", component: Component = null): Unit = {
-    JOptionPane.showMessageDialog(component, message, title, JOptionPane.ERROR_MESSAGE,
-      Image.file(ERROR_ICON).toIcon)
+  def alert(message: String,
+            title: String = "Alert",
+            component:
+            Component = null): Unit = {
+    JOptionPane.showOptionDialog(component, message, title, JOptionPane.WARNING_MESSAGE,
+      JOptionPane.PLAIN_MESSAGE, Image.file(WARNING_ICON).toIcon, Array(ALERT_BUTTON_TEXT), ALERT_BUTTON_TEXT)
+  }
+
+  def error(message: String,
+            title: String = "Error",
+            component:
+            Component = null): Unit = {
+    JOptionPane.showOptionDialog(component, message, title, JOptionPane.ERROR_MESSAGE,
+      JOptionPane.PLAIN_MESSAGE, Image.file(ERROR_ICON).toIcon, Array(ERROR_BUTTON_TEXT), ERROR_BUTTON_TEXT)
   }
 
   def confirm(message: String,
               title: String = "Confirm",
               component: Component = null): Int = {
-    JOptionPane.showConfirmDialog(component, message, title, JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
-      Image.file(CONFIRM_ICON).toIcon)
+    JOptionPane.showOptionDialog(component, message, title, JOptionPane.YES_NO_OPTION,
+      JOptionPane.PLAIN_MESSAGE, Image.file(CONFIRM_ICON).toIcon, Array(YES_BUTTON_TEXT, NO_BUTTON_TEXT), YES_BUTTON_TEXT)
   }
 
   def confirmCancel(message: String,
                     title: String = "Confirm",
                     component: Component = null): Int = {
-    JOptionPane.showConfirmDialog(component, message, title, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
-      Image.file(CONFIRM_ICON).toIcon)
+    JOptionPane.showOptionDialog(component, message, title, JOptionPane.YES_NO_CANCEL_OPTION,
+      JOptionPane.PLAIN_MESSAGE, Image.file(CONFIRM_ICON).toIcon, Array(YES_BUTTON_TEXT, NO_BUTTON_TEXT, CANCEL_BUTTON_TEXT), YES_BUTTON_TEXT)
   }
 
   def input(message: String,
@@ -44,7 +63,22 @@ object SwingUtils {
             component: Component = null): Option[String] = {
     val input = JOptionPane.showInputDialog(component, message, title, JOptionPane.QUESTION_MESSAGE,
       Image.file(CONFIRM_ICON).toIcon, null, null);
-    Option(input.asInstanceOf[String])
+//    val input = JOptionPane.showOptionDialog(component, message, title, JOptionPane.YES_NO_CANCEL_OPTION,
+//      JOptionPane.QUESTION_MESSAGE, Image.file(CONFIRM_ICON).toIcon, Array(YES_BUTTON_TEXT, CANCEL_BUTTON_TEXT), YES_BUTTON_TEXT);
+    Option(input) match {
+      case Some(i) => Option(i.toString)
+      case _ => Option.empty
+    }
+  }
+
+  def pick(message: String, values: Array[Object], title: String = "Pick one"): Option[(Int, String)] = {
+    val option = Option(JOptionPane.showInputDialog(null, message, title,
+      JOptionPane.QUESTION_MESSAGE, null, values, "Three"))
+
+    option match {
+      case Some(s) => Option((values.indexOf(s), s.toString))
+      case _ => Option.empty
+    }
   }
 
 }

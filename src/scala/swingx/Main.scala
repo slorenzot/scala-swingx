@@ -67,7 +67,7 @@ object Main extends App {
       .change(() => SwingUtils.alert("Hi"))
     Binding.of(f.jToggleButton1)
       .change(() => {
-        SwingUtils.alert("Hi")
+        SwingUtils.withLocale().alert("Hi")
       })
       .selected(() => println("Seleccionado"))
       .unselected(() => println("Deseleccionado"))
@@ -77,9 +77,15 @@ object Main extends App {
       .select(selected => println(selected))
 
     Binding.of(f.jComboBox1)
-      .change(() => println("Cambio"))
+      .change(() => {
+        println("Cambio")
+        val selection =SwingUtils.pick("Pick One!", Array("One", "Two", "Three"))
+      })
 
-    (new MenuCheckItemBinding(window.jCheckBoxMenuItem1)).change(() => SwingUtils.alert("Hi"))
+    Binding.of(window.jCheckBoxMenuItem1)
+      .change(() => println("Cambio"))
+//    (new MenuCheckItemBinding(window.jCheckBoxMenuItem1))
+//      .change(() => SwingUtils.alert("Hi"))
   })
     //    .terminate(f => println(s"terminating $f..."))
     //    .opened(f => println(s"Opened Window $f..."))
