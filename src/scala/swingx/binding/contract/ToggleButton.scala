@@ -7,7 +7,9 @@ import scala.swingx.binding.ToggleButtonBinding
 /**
   * Created by Soulberto Lorenzo on 8/1/2017.
   */
-trait ToggleButton[T <: javax.swing.AbstractButton, U] extends Toggleable[T, U] {
+trait ToggleButton[T <: javax.swing.AbstractButton, U] {
+
+  private def source: T = this.asInstanceOf[T]
 
   protected def click(source: T, action: () => Unit): U = {
     source.addActionListener(new ActionListener() {
@@ -16,5 +18,22 @@ trait ToggleButton[T <: javax.swing.AbstractButton, U] extends Toggleable[T, U] 
 
     this.asInstanceOf[U]
   }
+
+  protected def change(source: T, action: () => Unit): U = {
+    source.addActionListener(new ActionListener {
+      override def actionPerformed(actionEvent: ActionEvent) = action.apply()
+    })
+    this.asInstanceOf[U]
+  }
+
+  protected def selected(source: T, action: () => Unit): U = change(source, () => {
+    if (source.getModel().isSelected()) action.apply()
+    this
+  })
+
+  protected def unselected(source: T, action: () => Unit): U = change(source, () => {
+    if (!source.getModel().isSelected()) action.apply()
+    this
+  })
 
 }

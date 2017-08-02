@@ -3,7 +3,7 @@ package scala.swingx.binding
 import javax.swing.JTextField
 import javax.swing.text.JTextComponent
 
-import scala.swingx.binding.contract.{Editable, TextSelectable, Toggleable}
+import scala.swingx.binding.contract.{Editable, TextSelectable}
 
 /**
   * Created by Soulberto Lorenzo on 7/28/2017.

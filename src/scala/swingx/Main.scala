@@ -14,9 +14,7 @@ object Main extends App {
     .title("Main Window")
     //    .bind(component, (source, context) => {})
     .bind(window.jMenuItem1, () => SwingUtils.alert("Hi"))
-    //    .bind(window.jCheckBoxMenuItem1, () => SwingUtils.alert("Hi"))
     .bind(window.jRadioButtonMenuItem1, () => SwingUtils.alert("Hi"))
-//    .bind(window.jToggleButton1, () => SwingUtils.alert("Hi"))
     .bind(window.jButton1, () => {
       val dialog: swingExample.Dialog = new swingExample.Dialog(null, true)
 
@@ -77,6 +75,9 @@ object Main extends App {
     Binding.of(f.jTextField1)
       .change(() => println("El texto cambio"))
       .select(selected => println(selected))
+
+    Binding.of(f.jComboBox1)
+      .change(() => println("Cambio"))
 
     (new MenuCheckItemBinding(window.jCheckBoxMenuItem1)).change(() => SwingUtils.alert("Hi"))
   })

@@ -45,5 +45,6 @@ object Binding {
   def of(swingComponent: javax.swing.JCheckBoxMenuItem) = new MenuCheckItemBinding(swingComponent)
   def of(swingComponent: javax.swing.JRadioButtonMenuItem) = new MenuRadioItemBinding(swingComponent)
   def of(swingComponent: javax.swing.JTextField) = new TextBinding(swingComponent)
+  def of(swingComponent: javax.swing.JComboBox[String]) = new ComboBoxBinding(swingComponent)
 
 }
