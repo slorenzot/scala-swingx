@@ -7,12 +7,10 @@ import scala.swingx.utils.{SwingConstants, SwingUtils}
   * Created by Soulberto on 7/27/2017.
   */
 object Main extends App {
-  val icon = Image.file("/resources/icons/default.png").toIcon
-
   val window: swingExample.Frame = new swingExample.Frame()
 
   Frame.of(window)
-    .icon(icon)
+    .icon(SwingConstants.DEFAULT_ICON)
     .title("Main Window")
     //    .bind(component, (source, context) => {})
     .bind(window.jMenuItem1, () => SwingUtils.alert("Hi"))
@@ -24,7 +22,7 @@ object Main extends App {
 
       Dialog.of(dialog)
         .from(window)
-        .icon(icon)
+        .icon(SwingConstants.DEFAULT_ICON)
         .title("Dialog Window")
         .bind(dialog.jButton1, () => {
           SwingUtils.alert("Hi")
@@ -65,23 +63,24 @@ object Main extends App {
     })
     .confirmClosing()
     //    .confirmClosing(() => SwingUtils.confirm("Confirma que desea salir?", "Confirmar salida", null))
-    .prepare(f => println(s"preparing $f..."))
-    .terminate(f => println(s"terminating $f..."))
-    .opened(f => println(s"Opened Window $f..."))
-    .closing(f => println(s"Closing Window $f..."))
-    .closed(f => println(s"Closed Window $f..."))
+    .prepare(f => {
+    println(s"preparing $f...")
+    Binding.of(f.jCheckBoxMenuItem1)
+      .change(() => SwingUtils.alert("Hi"))
+    Binding.of(f.jToggleButton1)
+      .click(() => SwingUtils.alert("Hi"))
+
+    Binding.of(f.jTextField1)
+      .change(() => println("El texto cambio"))
+      .select(selected => println(selected))
+
+    (new MenuCheckItemBinding(window.jCheckBoxMenuItem1)).change(() => SwingUtils.alert("Hi"))
+  })
+    //    .terminate(f => println(s"terminating $f..."))
+    //    .opened(f => println(s"Opened Window $f..."))
+    //    .closing(f => println(s"Closing Window $f..."))
+    //    .closed(f => println(s"Closed Window $f..."))
     //    .maximize
     .center
     .display
-
-  (new MenuCheckItemBinding(window.jCheckBoxMenuItem1)).change(() => SwingUtils.alert("Hi"))
-  Binding.of(window.jCheckBoxMenuItem1).change(() => SwingUtils.alert("Hi"))
-  Binding.of(window.jToggleButton1).click(() => SwingUtils.alert("Hi"))
-
-  Binding.of(window.jTextField1)
-    .change(() => println("El texto cambio"))
-    .select(selected => println(selected))
-    .unselect(() => println("Vacio"))
-
-
 }

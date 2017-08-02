@@ -1,9 +1,13 @@
 package scala.swingx.utils
 
+import scala.swingx.Image
+
 /**
   * Created by Soulberto on 7/28/2017.
   */
 object SwingConstants {
+
+  val DEFAULT_ICON = Image.file("/resources/icons/default.png").toIcon
 
   val YES: Int = 0
   val NO: Int = 1

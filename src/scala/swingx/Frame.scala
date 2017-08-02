@@ -133,6 +133,10 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
     this
   }
 
+//  def bind[U <: javax.swing.JComponent, V](component: U): Binding[U] = {
+//    Binding.of(component)
+//  }
+
 }
 
 object Frame {
