@@ -5,6 +5,7 @@ import java.awt.Component
 import java.util.Locale
 import javax.swing.JOptionPane
 
+import scala.reflect.io.File
 import scala.swingx.Image
 
 /**
@@ -93,6 +94,17 @@ object SwingUtils {
 
   def selectDirectory: Unit = ???
 
-  def selectFile: Unit = ???
+  def selectFile(path: String = javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath): Option[File] = {
+    val jfc = new javax.swing.JFileChooser(javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory())
+
+    val option = jfc.showOpenDialog(null)
+//    val option = jfc.showSaveDialog(null)
+
+    option match {
+      case javax.swing.JFileChooser.APPROVE_OPTION => Option(File(jfc.getSelectedFile))
+      case _ => Option.empty
+    }
+
+  }
 
 }
