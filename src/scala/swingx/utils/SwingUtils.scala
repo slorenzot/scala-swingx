@@ -84,8 +84,9 @@ object SwingUtils {
   def pick(message: String,
            values: Array[Object],
            title: String = "Pick one"): Option[(Int, String)] = {
+    val icon = Image.file(SwingUtils.CONFIRM_ICON).toIcon
     val option = Option(JOptionPane.showInputDialog(null, message, title,
-      JOptionPane.QUESTION_MESSAGE, null, values, "Three"))
+      JOptionPane.QUESTION_MESSAGE, icon, values, "Three"))
 
     option match {
       case Some(s) => Option((values.indexOf(s), s.toString))
