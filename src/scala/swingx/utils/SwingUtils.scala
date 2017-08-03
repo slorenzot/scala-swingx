@@ -14,8 +14,9 @@ import scala.swingx.Image
 object SwingUtils {
 
   private val WARNING_ICON = "/resources/icons/Warning_48px.png"
-  private val CONFIRM_ICON = "/resources/icons/Help_48px.png"
+  private val QUESTION_ICON = "/resources/icons/Help_48px.png"
   private val ERROR_ICON = "/resources/icons/Error_48px.png"
+  private val CONFIRM_ICON = QUESTION_ICON
 
   private val ALERT_BUTTON_TEXT = "OK"
   private val ERROR_BUTTON_TEXT = ALERT_BUTTON_TEXT
@@ -64,8 +65,8 @@ object SwingUtils {
   def input(message: String,
             title: String = "Input Value",
             component: Component = null): Option[String] = {
-//    val input = JOptionPane.showInputDialog(component, message, title, JOptionPane.QUESTION_MESSAGE,
-//      Image.file(CONFIRM_ICON).toIcon, null, null);
+    //    val input = JOptionPane.showInputDialog(component, message, title, JOptionPane.QUESTION_MESSAGE,
+    //      Image.file(CONFIRM_ICON).toIcon, null, null);
     val panel = new javax.swing.JPanel
     panel.add(new javax.swing.JLabel(message))
     val textField = new javax.swing.JTextField
@@ -101,8 +102,10 @@ object SwingUtils {
              ctype: Int,
              icon: Image,
              strings: Array[Object],
-             default: String): Unit = {
+             default: String) = {
 
+    JOptionPane.showOptionDialog(panel, panel, title, JOptionPane.DEFAULT_OPTION,
+      JOptionPane.QUESTION_MESSAGE, Image.file(CONFIRM_ICON).toIcon, Array(YES_BUTTON_TEXT, CANCEL_BUTTON_TEXT), YES_BUTTON_TEXT);
   }
 
   def selectFile(title: String,

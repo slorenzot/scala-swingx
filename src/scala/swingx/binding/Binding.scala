@@ -41,6 +41,12 @@ case class Binding[T](swingComponent: T,
       textfield.change(action)
     }
 
+    case "class javax.swing.JList" => {
+      val source = swingComponent.asInstanceOf[javax.swing.JList[String]]
+      var listBinding = new ListBoxBinding(source)
+      listBinding.change(action)
+    }
+
     case _ => println(s"=> ScalaSwingX No support Component: $swingComponent!")
   }
 
