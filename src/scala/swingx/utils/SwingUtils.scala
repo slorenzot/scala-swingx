@@ -61,11 +61,18 @@ object SwingUtils {
   def input(message: String,
             title: String = "Input Value",
             component: Component = null): Option[String] = {
-    val input = JOptionPane.showInputDialog(component, message, title, JOptionPane.QUESTION_MESSAGE,
-      Image.file(CONFIRM_ICON).toIcon, null, null);
-//    val input = JOptionPane.showOptionDialog(component, message, title, JOptionPane.YES_NO_CANCEL_OPTION,
-//      JOptionPane.QUESTION_MESSAGE, Image.file(CONFIRM_ICON).toIcon, Array(YES_BUTTON_TEXT, CANCEL_BUTTON_TEXT), YES_BUTTON_TEXT);
-    Option(input) match {
+//    val input = JOptionPane.showInputDialog(component, message, title, JOptionPane.QUESTION_MESSAGE,
+//      Image.file(CONFIRM_ICON).toIcon, null, null);
+    val panel = new javax.swing.JPanel
+    panel.add(new javax.swing.JLabel(message))
+    val textField = new javax.swing.JTextField
+    textField.setColumns(10)
+    panel.add(textField)
+
+    JOptionPane.showOptionDialog(component, panel, title, JOptionPane.YES_NO_CANCEL_OPTION,
+      JOptionPane.QUESTION_MESSAGE, Image.file(CONFIRM_ICON).toIcon, Array(YES_BUTTON_TEXT, CANCEL_BUTTON_TEXT), YES_BUTTON_TEXT);
+
+    Option(textField.getText) match {
       case Some(i) => Option(i.toString)
       case _ => Option.empty
     }
@@ -80,5 +87,12 @@ object SwingUtils {
       case _ => Option.empty
     }
   }
+
+  def custom(parent: Component, panel: javax.swing.JPanel, title: String,
+             option: Int, ctype: Int, icon: Image, strings: Array[Object], default: String): Unit = ???
+
+  def selectDirectory: Unit = ???
+
+  def selectFile: Unit = ???
 
 }

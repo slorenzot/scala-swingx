@@ -7,33 +7,34 @@ import scala.swingx.binding.ToggleButtonBinding
 /**
   * Created by Soulberto Lorenzo on 8/1/2017.
   */
-trait ToggleButton[T <: javax.swing.AbstractButton, U] {
+trait ToggleButton[T <: javax.swing.AbstractButton] {
 
   private def source: T = this.asInstanceOf[T]
 
-  protected def click(source: T, action: () => Unit): U = {
+  protected def click(source: T, action: () => Unit): ToggleButton[T] = {
     source.addActionListener(new ActionListener() {
       override def actionPerformed(e: ActionEvent) = action.apply()
     })
-
-    this.asInstanceOf[U]
+    this
   }
 
-  protected def change(source: T, action: () => Unit): U = {
-    source.addActionListener(new ActionListener {
+  protected def change(source: T, action: () => Unit): ToggleButton[T] = {
+    source.addActionListener(new ActionListener() {
       override def actionPerformed(actionEvent: ActionEvent) = action.apply()
     })
-    this.asInstanceOf[U]
+    this
   }
 
-  protected def selected(source: T, action: () => Unit): U = change(source, () => {
-    if (source.getModel().isSelected()) action.apply()
-    this
-  })
+  protected def selected(source: T, action: () => Unit): ToggleButton[T] =
+    change(source, () => {
+      if (source.getModel().isSelected()) action.apply()
+      this
+    })
 
-  protected def unselected(source: T, action: () => Unit): U = change(source, () => {
-    if (!source.getModel().isSelected()) action.apply()
-    this
-  })
+  protected def unselected(source: T, action: () => Unit): ToggleButton[T] =
+    change(source, () => {
+      if (!source.getModel().isSelected()) action.apply()
+      this
+    })
 
 }

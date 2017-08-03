@@ -7,7 +7,8 @@ import scala.swingx.binding.contract.{Clickable, ToggleButton}
 /**
   * Created by Soulberto Lorenzo on 7/28/2017.
   */
-case class ToggleButtonBinding(swingComponent: javax.swing.JToggleButton) extends ToggleButton[javax.swing.JToggleButton, ToggleButtonBinding] {
+case class ToggleButtonBinding(swingComponent: javax.swing.JToggleButton)
+  extends ToggleButton[javax.swing.JToggleButton] {
 
   def click(action: () => Unit): ToggleButtonBinding =  {
     super.click(swingComponent, action)
