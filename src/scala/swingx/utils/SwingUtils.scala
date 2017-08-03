@@ -152,4 +152,28 @@ object SwingUtils {
     }
   }
 
+  def saveFile(title: String,
+               path: String = homeDirectory.getAbsolutePath,
+               parent: Component,
+               isDirectory: Boolean = false,
+               approveText: String = "Select",
+               cancelText: String = "Cancel"): Option[File] = {
+    javax.swing.UIManager.put("FileChooser.approveButtonText", approveText)
+    javax.swing.UIManager.put("FileChooser.cancelButtonText", cancelText)
+
+    val dialog = new javax.swing.JFileChooser(path)
+    dialog.setLocale(Locale.US)
+    dialog.setDialogTitle(title)
+    dialog.setMultiSelectionEnabled(false)
+    dialog.setFileSelectionMode(javax.swing.JFileChooser.FILES_ONLY)
+    javax.swing.SwingUtilities.updateComponentTreeUI(dialog)
+
+    val option = dialog.showSaveDialog(parent)
+
+    option match {
+      case javax.swing.JFileChooser.APPROVE_OPTION => Option(dialog.getSelectedFile)
+      case _ => Option.empty
+    }
+  }
+
 }
