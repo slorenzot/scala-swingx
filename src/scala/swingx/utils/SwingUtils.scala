@@ -2,10 +2,10 @@
 package scala.swingx.utils
 
 import java.awt.Component
+import java.io.File
 import java.util.Locale
 import javax.swing.JOptionPane
 
-import scala.reflect.io.File
 import scala.swingx.Image
 
 /**
@@ -23,6 +23,8 @@ object SwingUtils {
   private val YES_BUTTON_TEXT = "Yes"
   private val NO_BUTTON_TEXT = "No"
   private val CANCEL_BUTTON_TEXT = "Cancel"
+
+  def homeDirectory = javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory()
 
   def withLocale(locale: java.util.Locale = java.util.Locale.US) = {
     Locale.setDefault(locale)
@@ -79,7 +81,9 @@ object SwingUtils {
     }
   }
 
-  def pick(message: String, values: Array[Object], title: String = "Pick one"): Option[(Int, String)] = {
+  def pick(message: String,
+           values: Array[Object],
+           title: String = "Pick one"): Option[(Int, String)] = {
     val option = Option(JOptionPane.showInputDialog(null, message, title,
       JOptionPane.QUESTION_MESSAGE, null, values, "Three"))
 
@@ -89,22 +93,63 @@ object SwingUtils {
     }
   }
 
-  def custom(parent: Component, panel: javax.swing.JPanel, title: String,
-             option: Int, ctype: Int, icon: Image, strings: Array[Object], default: String): Unit = ???
+  def custom(parent: Component,
+             panel: javax.swing.JPanel,
+             title: String,
+             option: Int,
+             ctype: Int,
+             icon: Image,
+             strings: Array[Object],
+             default: String): Unit = ???
 
-  def selectDirectory: Unit = ???
+  def selectFile(title: String,
+                 path: String = homeDirectory.getAbsolutePath,
+                 parent: Component,
+                 isDirectory: Boolean = false,
+                 approveText: String = "Select",
+                 cancelText: String = "Cancel"): Option[File] = {
+    javax.swing.UIManager.put("FileChooser.approveButtonText", approveText)
+    javax.swing.UIManager.put("FileChooser.cancelButtonText", cancelText)
 
-  def selectFile(path: String = javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath): Option[File] = {
-    val jfc = new javax.swing.JFileChooser(javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory())
+    val dialog = new javax.swing.JFileChooser(path)
+    dialog.setLocale(Locale.US)
+    dialog.setDialogTitle(title)
+    dialog.setMultiSelectionEnabled(false)
+    dialog.setFileSelectionMode(javax.swing.JFileChooser.FILES_ONLY)
+    javax.swing.SwingUtilities.updateComponentTreeUI(dialog)
 
-    val option = jfc.showOpenDialog(null)
-//    val option = jfc.showSaveDialog(null)
+    val option = dialog.showOpenDialog(parent)
+//    val option = dialog.showSaveDialog(null)
 
     option match {
-      case javax.swing.JFileChooser.APPROVE_OPTION => Option(File(jfc.getSelectedFile))
+      case javax.swing.JFileChooser.APPROVE_OPTION => Option(dialog.getSelectedFile)
       case _ => Option.empty
     }
 
+  }
+
+  def selectFiles(title: String,
+                  path: String = homeDirectory.getAbsolutePath,
+                  parent: Component,
+                  isDirectory: Boolean = false,
+                  approveText: String = "Select",
+                  cancelText: String = "Cancel"): Option[List[File]] = {
+    javax.swing.UIManager.put("FileChooser.approveButtonText", approveText)
+    javax.swing.UIManager.put("FileChooser.cancelButtonText", cancelText)
+
+    val dialog = new javax.swing.JFileChooser(path)
+    dialog.setLocale(Locale.US)
+    dialog.setDialogTitle(title)
+    dialog.setMultiSelectionEnabled(true)
+    dialog.setFileSelectionMode(javax.swing.JFileChooser.FILES_ONLY)
+    javax.swing.SwingUtilities.updateComponentTreeUI(dialog)
+
+    val option = dialog.showOpenDialog(parent)
+
+    option match {
+      case javax.swing.JFileChooser.APPROVE_OPTION => Option(dialog.getSelectedFiles.toList)
+      case _ => Option.empty
+    }
   }
 
 }
