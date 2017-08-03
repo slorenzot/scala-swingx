@@ -17,64 +17,64 @@ object Main extends App {
     .bind(window.jMenuItem1, () => SwingUtils.alert("Hi"))
     .bind(window.jRadioButtonMenuItem1, () => SwingUtils.alert("Hi"))
     .bind(window.jTextArea2, () => SwingUtils.alert("Change"))
+    .bind(window.jPasswordField1, () => println(window.jPasswordField1.getText))
     .bind(window.jButton1, () => {
-      SwingUtils.selectFile("Select a File", parent = window, approveText = "Select a file") match {
-        case Some(f) => SwingUtils.alert(s"File selected ${f.toString()}")
-        case _ => println("No file selected!")
-      }
-      SwingUtils.selectFiles("Select a File", parent = window, approveText = "Select a file") match {
-        case Some(files) => SwingUtils.alert(s"File selected ${files.size}")
-        case _ => println("No file selected!")
-      }
-//      val dialog: swingExample.Dialog = new swingExample.Dialog(null, true)
-//
-//      Dialog.of(dialog)
-//        .from(window)
-//        .icon(SwingConstants.DEFAULT_ICON)
-//        .title("Dialog Window")
-//        .bind(dialog.jButton1, () => {
-//          SwingUtils.alert("Hi")
-//
-//          SwingUtils.error("Error")
-//
-//          val option = SwingUtils.confirm("Some question") match {
-//            case SwingConstants.YES => println("yes")
-//            case SwingConstants.NO => println("no")
-//            case _ => println("Cancelled by User")
-//          }
-//        })
-//        .bind(dialog.jButton1, () => {
-//
-//        })
-//        .bind(dialog.jButton2, () => {
-//          SwingUtils.confirmCancel("Some question") match {
-//            case SwingConstants.YES => println("yes")
-//            case SwingConstants.NO => println("no")
-//            case SwingConstants.CANCEL => println("cancel")
-//            case _ =>
-//          }
-//
-//          SwingUtils.input("What is your age?", "Input value") match {
-//            case Some(s) => if (s.isEmpty) SwingUtils.alert(s"Lo siento, no suministro su edad") else SwingUtils.alert(s"Usted tiene ${s}")
-//            case None => SwingUtils.alert(s"Lo siento, no suministro su edad")
-//          }
-//        })
-//        .prepare(d => {
-//          println(s"preparing $d...")
-//          1 / 0
-//          println(d.jButton1)
-//          println(d.jButton2)
-//        })
-//        .terminate(f => println(s"terminating $f..."))
-//        .center
-//        .display
+      //      SwingUtils.selectFile("Select a File", parent = window, approveText = "Select a file") match {
+      //        case Some(f) => SwingUtils.alert(s"File selected ${f.toString()}")
+      //        case _ => println("No file selected!")
+      //      }
+      //      SwingUtils.selectFiles("Select a File", parent = window, approveText = "Select a file") match {
+      //        case Some(files) => SwingUtils.alert(s"File selected ${files.size}")
+      //        case _ => println("No file selected!")
+      //      }
+      val dialog: swingExample.Dialog = new swingExample.Dialog(null, true)
+
+      Dialog.of(dialog)
+        .from(window)
+        .icon(SwingConstants.DEFAULT_ICON)
+        .title("Dialog Window")
+        .bind(dialog.jButton1, () => {
+          SwingUtils.alert("Hi")
+
+          SwingUtils.error("Error")
+
+          val option = SwingUtils.confirm("Some question") match {
+            case SwingConstants.YES => println("yes")
+            case SwingConstants.NO => println("no")
+            case _ => println("Cancelled by User")
+          }
+        })
+        .bind(dialog.jButton1, () => {
+
+        })
+        .bind(dialog.jButton2, () => {
+          SwingUtils.confirmCancel("Some question") match {
+            case SwingConstants.YES => println("yes")
+            case SwingConstants.NO => println("no")
+            case SwingConstants.CANCEL => println("cancel")
+            case _ =>
+          }
+
+          SwingUtils.input("What is your age?", "Input value") match {
+            case Some(s) => if (s.isEmpty) SwingUtils.alert(s"Lo siento, no suministro su edad") else SwingUtils.alert(s"Usted tiene ${s}")
+            case None => SwingUtils.alert(s"Lo siento, no suministro su edad")
+          }
+        })
+        .prepare(d => {
+          println(s"preparing $d...")
+          1 / 0
+          println(d.jButton1)
+          println(d.jButton2)
+        })
+        .terminate(f => println(s"terminating $f..."))
+        .center
+        .display
     })
     .confirmClosing()
     //    .confirmClosing(() => SwingUtils.confirm("Confirma que desea salir?", "Confirmar salida", null))
     .prepare(f => {
     println(s"preparing $f...")
-    Binding.of(f.jCheckBoxMenuItem1)
-      .change(() => SwingUtils.alert("Hi"))
+    Binding.of(f.jCheckBoxMenuItem1).change(() => SwingUtils.alert("Hi"))
     Binding.of(f.jToggleButton1)
       .change(() => {
         SwingUtils.withLocale().alert("Hi")

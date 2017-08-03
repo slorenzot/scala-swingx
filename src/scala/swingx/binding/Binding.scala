@@ -28,7 +28,8 @@ case class Binding[T](swingComponent: T,
 
     case "class javax.swing.JTextField" |
       "class javax.swing.JTextArea" |
-      "class javax.swing.JTextPane" => {
+      "class javax.swing.JTextPane" |
+      "class javax.swing.JPasswordField" => {
       val source = swingComponent.asInstanceOf[javax.swing.text.JTextComponent]
       val textfield = new TextBinding(source)
       textfield.change(action)
