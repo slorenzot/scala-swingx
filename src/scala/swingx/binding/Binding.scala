@@ -8,21 +8,32 @@ case class Binding[T](swingComponent: T,
 
   swingComponent.getClass.toString match {
     case "class javax.swing.JButton" => {
-      val button = new ButtonBinding(swingComponent.asInstanceOf[javax.swing.JButton])
+      val source = swingComponent.asInstanceOf[javax.swing.JButton]
+      val button = new ButtonBinding(source)
       button.click(action)
     }
 
     case "class javax.swing.JCheckBoxMenuItem" => {
       val source = swingComponent.asInstanceOf[javax.swing.JCheckBoxMenuItem]
-      val checkItem = new MenuCheckItemBinding((swingComponent.asInstanceOf[javax.swing.JCheckBoxMenuItem]))
+      val checkItem = new MenuCheckItemBinding(source)
       checkItem.change(action)
     }
 
     case "class javax.swing.JRadioButtonMenuItem" |
          "class javax.swing.JMenuItem" => {
-      val button = new MenuItemBinding(swingComponent.asInstanceOf[javax.swing.JMenuItem])
+      val source = swingComponent.asInstanceOf[javax.swing.JMenuItem]
+      val button = new MenuItemBinding(source)
       button.click(action)
     }
+
+    case "class javax.swing.JTextField" |
+      "class javax.swing.JTextArea" |
+      "class javax.swing.JTextPane" => {
+      val source = swingComponent.asInstanceOf[javax.swing.text.JTextComponent]
+      val textfield = new TextBinding(source)
+      textfield.change(action)
+    }
+
     case _ => println(s"=> ScalaSwingX No support Component: $swingComponent!")
   }
 
