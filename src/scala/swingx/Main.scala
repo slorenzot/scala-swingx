@@ -16,8 +16,10 @@ object Main extends App {
     //    .bind(component, (source, context) => {})
     .bind(window.jMenuItem1, () => SwingUtils.alert("Hi"))
     .bind(window.jRadioButtonMenuItem1, () => SwingUtils.alert("Hi"))
-    .bind(window.jTextArea2, () => SwingUtils.alert("Change"))
+    .bind(window.jTextArea1, () => println("Cambio"))
+    .bind(window.jTextPane1, () => println("Cambio"))
     .bind(window.jPasswordField1, () => println(window.jPasswordField1.getText))
+    .bind(window.jFormattedTextField1, () => println("Formatted changed"))
     .bind(window.jLabel1, () => println("click"))
     .bind(window.jList1, () => println("selected"))
     .bind(window.jButton1, () => {
