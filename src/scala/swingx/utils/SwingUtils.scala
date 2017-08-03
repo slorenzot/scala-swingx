@@ -24,7 +24,7 @@ object SwingUtils {
   private val NO_BUTTON_TEXT = "No"
   private val CANCEL_BUTTON_TEXT = "Cancel"
 
-  def homeDirectory = javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory()
+  private def homeDirectory = javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory()
 
   def withLocale(locale: java.util.Locale = java.util.Locale.US) = {
     Locale.setDefault(locale)
@@ -100,7 +100,9 @@ object SwingUtils {
              ctype: Int,
              icon: Image,
              strings: Array[Object],
-             default: String): Unit = ???
+             default: String): Unit = {
+
+  }
 
   def selectFile(title: String,
                  path: String = homeDirectory.getAbsolutePath,
@@ -119,13 +121,11 @@ object SwingUtils {
     javax.swing.SwingUtilities.updateComponentTreeUI(dialog)
 
     val option = dialog.showOpenDialog(parent)
-//    val option = dialog.showSaveDialog(null)
 
     option match {
       case javax.swing.JFileChooser.APPROVE_OPTION => Option(dialog.getSelectedFile)
       case _ => Option.empty
     }
-
   }
 
   def selectFiles(title: String,
@@ -155,17 +155,15 @@ object SwingUtils {
   def saveFile(title: String,
                path: String = homeDirectory.getAbsolutePath,
                parent: Component,
-               isDirectory: Boolean = false,
                approveText: String = "Select",
-               cancelText: String = "Cancel"): Option[File] = {
+               cancelText: String = "Cancel",
+               filter: () => {}): Option[File] = {
     javax.swing.UIManager.put("FileChooser.approveButtonText", approveText)
     javax.swing.UIManager.put("FileChooser.cancelButtonText", cancelText)
 
     val dialog = new javax.swing.JFileChooser(path)
     dialog.setLocale(Locale.US)
     dialog.setDialogTitle(title)
-    dialog.setMultiSelectionEnabled(false)
-    dialog.setFileSelectionMode(javax.swing.JFileChooser.FILES_ONLY)
     javax.swing.SwingUtilities.updateComponentTreeUI(dialog)
 
     val option = dialog.showSaveDialog(parent)
