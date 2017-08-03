@@ -18,6 +18,7 @@ object Main extends App {
     .bind(window.jRadioButtonMenuItem1, () => SwingUtils.alert("Hi"))
     .bind(window.jTextArea2, () => SwingUtils.alert("Change"))
     .bind(window.jPasswordField1, () => println(window.jPasswordField1.getText))
+    .bind(window.jLabel1, () => println("click"))
     .bind(window.jButton1, () => {
       //      SwingUtils.selectFile("Select a File", parent = window, approveText = "Select a file") match {
       //        case Some(f) => SwingUtils.alert(s"File selected ${f.toString()}")

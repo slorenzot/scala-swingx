@@ -7,6 +7,12 @@ case class Binding[T](swingComponent: T,
                       action: () => Unit) {
 
   swingComponent.getClass.toString match {
+    case "class javax.swing.JLabel" => {
+      val source = swingComponent.asInstanceOf[javax.swing.JLabel]
+      val label = new LabelBinding(source)
+      label.click(action)
+    }
+
     case "class javax.swing.JButton" => {
       val source = swingComponent.asInstanceOf[javax.swing.JButton]
       val button = new ButtonBinding(source)
@@ -27,9 +33,9 @@ case class Binding[T](swingComponent: T,
     }
 
     case "class javax.swing.JTextField" |
-      "class javax.swing.JTextArea" |
-      "class javax.swing.JTextPane" |
-      "class javax.swing.JPasswordField" => {
+         "class javax.swing.JTextArea" |
+         "class javax.swing.JTextPane" |
+         "class javax.swing.JPasswordField" => {
       val source = swingComponent.asInstanceOf[javax.swing.text.JTextComponent]
       val textfield = new TextBinding(source)
       textfield.change(action)
@@ -52,11 +58,17 @@ object Binding {
   }
 
   def of(swingComponent: javax.swing.JButton) = new ButtonBinding(swingComponent)
+
   def of(swingComponent: javax.swing.JToggleButton) = new ToggleButtonBinding(swingComponent)
+
   def of(swingComponent: javax.swing.JMenuItem) = new MenuItemBinding(swingComponent)
+
   def of(swingComponent: javax.swing.JCheckBoxMenuItem) = new MenuCheckItemBinding(swingComponent)
+
   def of(swingComponent: javax.swing.JRadioButtonMenuItem) = new MenuRadioItemBinding(swingComponent)
+
   def of(swingComponent: javax.swing.JTextField) = new TextBinding(swingComponent)
+
   def of(swingComponent: javax.swing.JComboBox[String]) = new ComboBoxBinding(swingComponent)
 
 }
