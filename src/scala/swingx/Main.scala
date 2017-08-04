@@ -8,7 +8,10 @@ import scala.swingx.utils.{SwingConstants, SwingUtils}
   * Created by Soulberto on 7/27/2017.
   */
 object Main extends App {
+
   val window: swingExample.Frame = new swingExample.Frame()
+
+  def console(t: String) = window.jTextArea2.append(s"$t\n")
 
   Frame.of(window)
     .icon(SwingConstants.DEFAULT_ICON)
@@ -16,12 +19,12 @@ object Main extends App {
     //    .bind(component, (source, context) => {})
     .bind(window.jMenuItem1, () => SwingUtils.alert("Hi"))
     .bind(window.jRadioButtonMenuItem1, () => SwingUtils.alert("Hi"))
-    .bind(window.jTextArea1, () => println("Cambio"))
-    .bind(window.jTextPane1, () => println("Cambio"))
-    .bind(window.jPasswordField1, () => println(window.jPasswordField1.getText))
-    .bind(window.jFormattedTextField1, () => println("Formatted changed"))
-    .bind(window.jLabel1, () => println("click"))
-    .bind(window.jList1, () => println("selected"))
+    .bind(window.jTextArea1, () => console("Cambio"))
+    .bind(window.jTextPane1, () => console("Cambio"))
+    .bind(window.jPasswordField1, () => console(window.jPasswordField1.getText))
+    .bind(window.jFormattedTextField1, () => console("Formatted changed"))
+    .bind(window.jLabel1, () => console("click"))
+    .bind(window.jList1, () => console("selected"))
     .bind(window.jButton1, () => {
       //      SwingUtils.selectFile("Select a File", parent = window, approveText = "Select a file") match {
       //        case Some(f) => SwingUtils.alert(s"File selected ${f.toString()}")
@@ -43,9 +46,9 @@ object Main extends App {
           SwingUtils.error("Error")
 
           val option = SwingUtils.confirm("Some question") match {
-            case SwingConstants.YES => println("yes")
-            case SwingConstants.NO => println("no")
-            case _ => println("Cancelled by User")
+            case SwingConstants.YES => console("yes")
+            case SwingConstants.NO => console("no")
+            case _ => console("Cancelled by User")
           }
         })
         .bind(dialog.jButton1, () => {
@@ -53,9 +56,9 @@ object Main extends App {
         })
         .bind(dialog.jButton2, () => {
           SwingUtils.confirmCancel("Some question") match {
-            case SwingConstants.YES => println("yes")
-            case SwingConstants.NO => println("no")
-            case SwingConstants.CANCEL => println("cancel")
+            case SwingConstants.YES => console("yes")
+            case SwingConstants.NO => console("no")
+            case SwingConstants.CANCEL => console("cancel")
             case _ =>
           }
 
@@ -83,23 +86,29 @@ object Main extends App {
       .change(() => {
         SwingUtils.withLocale().alert("Hi")
       })
-      .selected(() => println("Seleccionado"))
-      .unselected(() => println("Deseleccionado"))
+      .selected(() => console("Seleccionado"))
+      .unselected(() => console("Deseleccionado"))
 
     Binding.of(f.jTextField1)
-      .change(() => println("El texto cambio"))
-      .select(selected => println(selected))
+      .change(() => console(s"El texto cambio"))
+      .select(selected => console(selected))
 
     Binding.of(f.jComboBox1)
       .change(() => {
-        println("Cambio")
-        val selection = SwingUtils.pick("Pick One!", Array("One", "Two", "Three"))
+        SwingUtils.pick("Pick One!", Array("One", "Two", "Three")) match {
+          case Some(s) => console(s._2)
+          case None =>
+        }
       })
 
     Binding.of(window.jCheckBoxMenuItem1)
-      .change(() => println("Cambio"))
-    //    (new MenuCheckItemBinding(window.jCheckBoxMenuItem1))
-    //      .change(() => SwingUtils.alert("Hi"))
+      .change(() => console("Cambio"))
+
+    Binding.of(window.jTextPane1)
+      .select(selected => console(selected))
+    Binding.of(window.jTextArea1)
+      .select(selected => console(selected))
+
   })
     //    .terminate(f => println(s"terminating $f..."))
     //    .opened(f => println(s"Opened Window $f..."))

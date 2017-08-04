@@ -10,7 +10,7 @@ trait Editable[T <: javax.swing.text.JTextComponent, U] {
 
   private def source: T = this.asInstanceOf[T]
 
-  private var text: String = ""
+  private var text = ""
 
   protected def change(source: T, action: () => Unit): U = {
     source.addKeyListener(new KeyListener() {

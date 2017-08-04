@@ -76,6 +76,10 @@ object Binding {
 
   def of(swingComponent: javax.swing.JTextField) = new TextBinding(swingComponent)
 
+  def of(swingComponent: javax.swing.JTextPane) = new TextBinding(swingComponent)
+
+  def of(swingComponent: javax.swing.JTextArea) = new TextBinding(swingComponent)
+
   def of(swingComponent: javax.swing.JComboBox[String]) = new ComboBoxBinding(swingComponent)
 
 }
