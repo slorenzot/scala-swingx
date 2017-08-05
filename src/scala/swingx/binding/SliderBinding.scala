@@ -1,0 +1,19 @@
+package scala.swingx.binding
+
+import javax.swing.JSlider
+
+import scala.swingx.binding.contract.{Editable, Slider, TextSelectable}
+
+/**
+  * Created by Soulberto Lorenzo on 7/28/2017.
+  */
+case class SliderBinding(swingComponent: javax.swing.JSlider) extends Slider[javax.swing.JSlider] {
+
+  //  def caret(action: () => Unit): TextBinding = super.caret(swingComponent, action)
+
+  def move(action: () => Unit): Slider[JSlider] = {
+    super.move(swingComponent, action)
+    this
+  }
+
+}

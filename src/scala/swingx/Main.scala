@@ -8,7 +8,6 @@ import scala.swingx.utils.{SwingConstants, SwingUtils}
   * Created by Soulberto on 7/27/2017.
   */
 object Main extends App {
-
   val window: swingExample.Frame = new swingExample.Frame()
 
   def console(t: String) = window.jTextArea2.append(s"$t\n")
@@ -17,14 +16,16 @@ object Main extends App {
     .icon(SwingConstants.DEFAULT_ICON)
     .title("Main Window")
     //    .bind(component, (source, context) => {})
+//    .bind(null, () => {})
     .bind(window.jMenuItem1, () => SwingUtils.alert("Hi"))
     .bind(window.jRadioButtonMenuItem1, () => SwingUtils.alert("Hi"))
-    .bind(window.jTextArea1, () => console("Cambio"))
-    .bind(window.jTextPane1, () => console("Cambio"))
+    .bind(window.jTextArea1, () => console("TextArea Cambio"))
+    .bind(window.jTextPane1, () => console("TextPane Cambio"))
     .bind(window.jPasswordField1, () => console(window.jPasswordField1.getText))
-    .bind(window.jFormattedTextField1, () => console("Formatted changed"))
-    .bind(window.jLabel1, () => console("click"))
-    .bind(window.jList1, () => console("selected"))
+    .bind(window.jFormattedTextField1, () => console("FormattedTextField changed"))
+    .bind(window.jLabel1, () => console("Label click"))
+    .bind(window.jList1, () => console("List selected"))
+    .bind(window.jSlider1, () => console("Slider moved!"))
     .bind(window.jButton1, () => {
       //      SwingUtils.selectFile("Select a File", parent = window, approveText = "Select a file") match {
       //        case Some(f) => SwingUtils.alert(s"File selected ${f.toString()}")

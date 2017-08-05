@@ -3,8 +3,9 @@ package scala.swingx.binding
 /**
   * Created by Soulberto Lorenzo on 7/27/2017.
   */
-case class Binding[T](swingComponent: T,
+case class Binding[T<: javax.swing.JComponent](swingComponent: T,
                       action: () => Unit) {
+  require(!swingComponent.eq(null), "Component reference shouldnt be null or empty!")
 
   swingComponent.getClass.toString match {
     case "class javax.swing.JLabel" => {
@@ -48,7 +49,13 @@ case class Binding[T](swingComponent: T,
       listBinding.change(action)
     }
 
-    case _ => println(s"=> ScalaSwingX No support Component: $swingComponent!")
+    case "class javax.swing.JSlider" => {
+      val source = swingComponent.asInstanceOf[javax.swing.JSlider]
+      val sliderBinding =  new SliderBinding(source)
+      sliderBinding.move(action)
+    }
+
+    case _ => require(false, s"=> ScalaSwingX No support Component: $swingComponent!")
   }
 
 }

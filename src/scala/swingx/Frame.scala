@@ -129,6 +129,7 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
   }
 
   def bind[U <: javax.swing.JComponent](component: U, action: () => Unit): Frame[T] = {
+    require(!component.eq(null), "Component reference shouldnt be null or empty!")
     new Binding[U](component, action)
     this
   }
