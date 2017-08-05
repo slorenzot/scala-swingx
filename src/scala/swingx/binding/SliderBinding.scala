@@ -2,7 +2,7 @@ package scala.swingx.binding
 
 import javax.swing.JSlider
 
-import scala.swingx.binding.contract.{Editable, Slider, TextSelectable}
+import scala.swingx.binding.contract.{Slider, TextSelectable}
 
 /**
   * Created by Soulberto Lorenzo on 7/28/2017.

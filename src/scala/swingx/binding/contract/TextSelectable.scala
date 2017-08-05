@@ -2,6 +2,8 @@ package scala.swingx.binding.contract
 
 import javax.swing.event.{CaretEvent, CaretListener}
 
+import scala.swingx.binding.contract.generic.Editable
+
 /**
   * Created by Soulberto Lorenzo on 7/30/2017.
   */

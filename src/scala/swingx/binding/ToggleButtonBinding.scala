@@ -2,7 +2,7 @@ package scala.swingx.binding
 
 import javax.swing.JToggleButton
 
-import scala.swingx.binding.contract.{Clickable, ToggleButton}
+import scala.swingx.binding.contract.ToggleButton
 
 /**
   * Created by Soulberto Lorenzo on 7/28/2017.

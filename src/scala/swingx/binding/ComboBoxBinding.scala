@@ -1,6 +1,6 @@
 package scala.swingx.binding
 
-import scala.swingx.binding.contract.{Clickable, ToggleComboBox}
+import scala.swingx.binding.contract.ToggleComboBox
 
 /**
   * Created by Soulberto Lorenzo on 7/28/2017.

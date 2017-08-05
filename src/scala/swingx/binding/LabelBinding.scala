@@ -1,6 +1,6 @@
 package scala.swingx.binding
 
-import scala.swingx.binding.contract.Clickable
+import scala.swingx.binding.contract.generic.Clickable
 
 /**
   * Created by Soulberto Lorenzo on 7/28/2017.

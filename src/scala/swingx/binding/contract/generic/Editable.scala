@@ -1,7 +1,6 @@
-package scala.swingx.binding.contract
+package scala.swingx.binding.contract.generic
 
-import java.awt.event.{ActionEvent, ActionListener, KeyEvent, KeyListener}
-import javax.swing.event.{CaretEvent, CaretListener}
+import java.awt.event.{KeyEvent, KeyListener}
 
 /**
   * Created by Soulberto Lorenzo on 7/30/2017.

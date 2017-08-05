@@ -55,6 +55,12 @@ case class Binding[T<: javax.swing.JComponent](swingComponent: T,
       sliderBinding.move(action)
     }
 
+    case "class javax.swing.JTable" => {
+      val source = swingComponent.asInstanceOf[javax.swing.JTable]
+      val tableBinding = new TableBinding(source)
+      tableBinding.change(action)
+    }
+
     case _ => require(false, s"=> ScalaSwingX No support Component: $swingComponent!")
   }
 

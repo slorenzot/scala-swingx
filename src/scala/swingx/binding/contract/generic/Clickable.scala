@@ -1,6 +1,6 @@
-package scala.swingx.binding.contract
+package scala.swingx.binding.contract.generic
 
-import java.awt.event.{ActionEvent, ActionListener, MouseAdapter, MouseEvent}
+import java.awt.event.{MouseAdapter, MouseEvent}
 
 /**
   * Created by Soulberto Lorenzo on 7/30/2017.

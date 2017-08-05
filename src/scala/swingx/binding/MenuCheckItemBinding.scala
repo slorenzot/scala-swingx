@@ -2,7 +2,7 @@ package scala.swingx.binding
 
 import javax.swing.JCheckBoxMenuItem
 
-import scala.swingx.binding.contract.{Clickable, ToggleButton, ToggleMenuItem}
+import scala.swingx.binding.contract.{ToggleButton, ToggleMenuItem}
 
 /**
   * Created by Soulberto Lorenzo on 7/28/2017.

@@ -2,7 +2,7 @@ package scala.swingx.binding
 
 import java.awt.event.{ActionEvent, ActionListener}
 
-import scala.swingx.binding.contract.Clickable
+import scala.swingx.binding.contract.generic.Clickable
 
 /**
   * Created by Soulberto Lorenzo on 7/28/2017.
