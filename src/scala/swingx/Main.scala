@@ -16,7 +16,7 @@ object Main extends App {
     .icon(SwingConstants.DEFAULT_ICON)
     .title("Main Window")
     //    .bind(component, (source, context) => {})
-//    .bind(null, () => {})
+    //    .bind(null, () => {})
     .bind(window.jMenuItem1, () => SwingUtils.alert("Hi"))
     .bind(window.jRadioButtonMenuItem1, () => SwingUtils.alert("Hi"))
     .bind(window.jTextArea1, () => console("TextArea Cambio"))
@@ -82,6 +82,10 @@ object Main extends App {
     //    .confirmClosing(() => SwingUtils.confirm("Confirma que desea salir?", "Confirmar salida", null))
     .prepare(f => {
     println(s"preparing $f...")
+    Binding.of(window.jTable1)
+      .clear
+      .columns(() => Array("Column1", "Column2"))
+      .populate(() => Array(Array("Value1", "Value2")))
     Binding.of(f.jCheckBoxMenuItem1).change(() => SwingUtils.alert("Hi"))
     Binding.of(f.jToggleButton1)
       .change(() => {

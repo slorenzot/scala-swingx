@@ -58,7 +58,7 @@ case class Binding[T<: javax.swing.JComponent](swingComponent: T,
     case "class javax.swing.JTable" => {
       val source = swingComponent.asInstanceOf[javax.swing.JTable]
       val tableBinding = new TableBinding(source)
-      tableBinding.change(action)
+      tableBinding.rowChange(action)
     }
 
     case _ => require(false, s"=> ScalaSwingX No support Component: $swingComponent!")
@@ -94,5 +94,7 @@ object Binding {
   def of(swingComponent: javax.swing.JTextArea) = new TextBinding(swingComponent)
 
   def of(swingComponent: javax.swing.JComboBox[String]) = new ComboBoxBinding(swingComponent)
+
+  def of(swingComponent: javax.swing.JTable) = new TableBinding(swingComponent)
 
 }

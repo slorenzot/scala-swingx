@@ -1,6 +1,7 @@
 package scala.swingx.binding
 
 import java.awt.event.{KeyEvent, KeyListener}
+import javax.swing.SwingUtilities
 import javax.swing.event.{ListSelectionEvent, ListSelectionListener, TableModelEvent, TableModelListener}
 import javax.swing.table.DefaultTableModel
 
@@ -10,23 +11,40 @@ import javax.swing.table.DefaultTableModel
 case class TableBinding(swingComponent: javax.swing.JTable) {
 
   private def source: javax.swing.JTable = swingComponent
+
   private var model: DefaultTableModel = swingComponent.getModel.asInstanceOf[DefaultTableModel]
 
-  def values(): Array[AnyRef] = {
-    var rows = Array.empty
+  private def updateUI(): Unit = SwingUtilities.invokeLater(new Runnable {
+    override def run() = swingComponent.updateUI()
+  })
 
-    for {
-      row <- swingComponent.getModel.getRowCount
-      col <- swingComponent.getModel.getColumnCount
+  //  def values(): Array[AnyRef] = {
+  //    var rows = Array.empty
+  //
+  //    for {
+  //      row <- swingComponent.getModel.getRowCount
+  //      col <- swingComponent.getModel.getColumnCount
+  //
+  //      rows :+ swingComponent.getModel.getValueAt(row, col)
+  //    } yield rows
+  //  }
 
-      rows :+ swingComponent.getModel.getValueAt(row, col)
-    } yield
+  def clear(): TableBinding = {
+    model = new DefaultTableModel
+    swingComponent.setModel(model)
+    updateUI()
+    this
   }
 
-  def populate(supplier: () => Array[AnyRef]): TableBinding = {
-    for (row <- supplier()) {
-      model.addRow()
-    }
+  def columns(supplier: () => Array[String]): TableBinding = {
+    for (col <- supplier()) model.addColumn(col)
+    updateUI()
+    this
+  }
+
+  def populate(supplier: () => Array[Array[AnyRef]]): TableBinding = {
+    for (row <- supplier()) model.addRow(row)
+    updateUI()
     this
   }
 
