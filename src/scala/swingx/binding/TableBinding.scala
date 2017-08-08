@@ -1,5 +1,6 @@
 package scala.swingx.binding
 
+import java.awt.Component
 import java.awt.event.{KeyEvent, KeyListener}
 import javax.swing.{ListSelectionModel, SwingUtilities}
 import javax.swing.event.{ListSelectionEvent, ListSelectionListener, TableModelEvent, TableModelListener}
@@ -38,6 +39,7 @@ case class TableBinding(swingComponent: javax.swing.JTable) {
 
   def columns(supplier: () => Array[String]): TableBinding = {
     for (col <- supplier()) model.addColumn(col)
+    source.createDefaultColumnsFromModel()
     updateUI()
     this
   }
@@ -48,13 +50,63 @@ case class TableBinding(swingComponent: javax.swing.JTable) {
     this
   }
 
-  def cellChange(action: () => Unit): TableBinding = ???
+  def cellChange(action: () => Unit): TableBinding = {
+    //    class EditableTableModel extends javax.swing.table.AbstractTableModel {
+    //      var columnTitles: Array[String]
+    //
+    //      var dataEntries: Array[Array[AnyVal]]
+    //
+    //      var rowCount = dataEntries.size
+    //
+    //      def EditableTableModel(titles: Array[String], entries: Array[Array[AnyVal]]): Unit = {
+    //        this.columnTitles = titles
+    //        this.dataEntries = entries
+    //      }
+    //
+    //      def getRowCount(): Int = dataEntries.length
+    //
+    //      def getColumnCount(): Int = columnTitles.length
+    //
+    //      def getValueAt(row: Int, column: Int): Array[Array[AnyVal]] = dataEntries(row)(column)
+    //
+    //      def setValueAt(value: AnyVal, row: Int, column: Int) {
+    //        dataEntries(row)(column) = value
+    //      }
+    //
+    //      override def getColumnName(column: Int): String = columnTitles(column)
+    //
+    //      override def getColumnClass(column: Int): Class[_] = getValueAt(0, column).getClass()
+    //
+    //      override def isCellEditable(row: Int, column: Int) = true
+    //
+    //    }
+    //    class TableCellEditorModel extends javax.swing.DefaultCellEditor {
+    //
+    //      def CleanCellEditor make () {
+    //        var field = new javax.swing.JTextField()
+    //
+    //        field.setBorder(null)
+    //        System.out.println("make")
+    //
+    //        return new TableCellEditorModel(field)
+    //      }
+    //
+    //      def CleanCellEditor(textfield: javax.swing.JTextField) = {
+    //        super.(textField)
+    //      }
+    //
+    //      def getTableCellEditorComponent(table: javax.swing.JTable,value:AnyVal, isSelected:Boolean, row: Int,column: Int): Component = {
+    //        return super.getTableCellEditorComponent(table, null, isSelected, row, column)
+    //      }
+    //    }
+    //    source.setCellEditor(new TableCellEditorModel)
+    this
+  }
 
   def rowChange(action: () => Unit): TableBinding = {
     source.getModel.addTableModelListener(new TableModelListener() {
-      override def tableChanged(e: TableModelEvent) = {
-        if (!source.getSelectionModel.getValueIsAdjusting) println("Table Changed")
-      }
+      override def tableChanged(e: TableModelEvent) =
+        if (!source.getSelectionModel.getValueIsAdjusting) action.apply()
     })
     this
   }
@@ -82,35 +134,6 @@ case class TableBinding(swingComponent: javax.swing.JTable) {
   }
 
   def focus(action: (String, Int, Int) => Unit): TableBinding = {
-    class EditableTableModel extends javax.swing.table.AbstractTableModel {
-      var columnTitles: Array[String]
-
-      var dataEntries: Array[Array[AnyVal]]
-
-      var rowCount = dataEntries.size
-
-      def EditableTableModel(titles: Array[String], entries: Array[Array[AnyVal]]): Unit = {
-        this.columnTitles = titles
-        this.dataEntries = entries
-      }
-
-      def getRowCount(): Int = dataEntries.length
-
-      def getColumnCount(): Int = columnTitles.length
-
-      def getValueAt(row: Int, column: Int): Array[Array[AnyVal]] = dataEntries(row)(column)
-
-      def setValueAt(value: AnyVal, row: Int, column: Int) {
-        dataEntries(row)(column) = value
-      }
-
-      override def getColumnName(column: Int): String = columnTitles(column)
-
-      override def getColumnClass(column: Int): Class[_] = getValueAt(0, column).getClass()
-
-      override def isCellEditable(row: Int, column: Int) = true
-
-    }
     //    source.setColumnSelectionAllowed(false)
     source.setCellSelectionEnabled(true)
     source.getModel.addTableModelListener(new TableModelListener {
