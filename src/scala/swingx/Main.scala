@@ -86,6 +86,7 @@ object Main extends App {
       .clear
       .columns(() => Array("Column1", "Column2"))
       .populate(() => Array(Array("Value1", "Value2")))
+      .selectRow(() => {})
     Binding.of(f.jCheckBoxMenuItem1).change(() => SwingUtils.alert("Hi"))
     Binding.of(f.jToggleButton1)
       .change(() => {

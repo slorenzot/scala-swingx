@@ -53,22 +53,35 @@ case class TableBinding(swingComponent: javax.swing.JTable) {
   def rowChange(action: () => Unit): TableBinding = {
     source.getModel.addTableModelListener(new TableModelListener() {
       override def tableChanged(e: TableModelEvent) = {
-
+        if (!swingComponent.getSelectionModel.getValueIsAdjusting) println("Table Changed")
       }
     })
     this
   }
 
-  def select(action: () => Unit): TableBinding = {
+  def selectRow(action: () => Unit): TableBinding = {
     source.getSelectionModel.addListSelectionListener(new ListSelectionListener() {
-      override def valueChanged(e: ListSelectionEvent) = {}
+      override def valueChanged(e: ListSelectionEvent) = {
+        if (!swingComponent.getSelectionModel.getValueIsAdjusting) println("Row Selected")
+      }
+    })
+    this
+  }
+
+  def selectCell(action: () => Unit): TableBinding = {
+    source.getSelectionModel.addListSelectionListener(new ListSelectionListener() {
+      override def valueChanged(e: ListSelectionEvent) = {
+        if (!swingComponent.getSelectionModel.getValueIsAdjusting) println("Cell Selected")
+      }
     })
     this
   }
 
   def unselect(action: () => Unit): TableBinding = {
     source.getSelectionModel.addListSelectionListener(new ListSelectionListener() {
-      override def valueChanged(e: ListSelectionEvent) = {}
+      override def valueChanged(e: ListSelectionEvent) = {
+        if (!swingComponent.getSelectionModel.getValueIsAdjusting) println("Unselected")
+      }
     })
     this
   }
