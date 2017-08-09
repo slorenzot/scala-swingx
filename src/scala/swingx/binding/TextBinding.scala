@@ -25,7 +25,7 @@ case class TextBinding(swingComponent: javax.swing.text.JTextComponent)
     this
   }
 
-  def onChange(action: () => Unit): TextBinding = {
+  def onChange(action: String => Unit): TextBinding = {
     super.onChange(swingComponent, action)
     this
   }
