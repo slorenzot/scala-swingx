@@ -8,8 +8,8 @@ import scala.swingx.binding.contract.generic.Clickable
 case class MenuItemBinding(swingComponent: javax.swing.JMenuItem)
   extends Clickable[javax.swing.JMenuItem, MenuItemBinding] {
 
-  def click(action: () => Unit): MenuItemBinding = {
-    super.click(swingComponent, action)
+  def onClick(action: () => Unit): MenuItemBinding = {
+    super.onClick(swingComponent, action)
     this
   }
 

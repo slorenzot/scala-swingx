@@ -7,8 +7,8 @@ import scala.swingx.binding.contract.{ListBox, ToggleComboBox}
   */
 case class ListBoxBinding(swingComponent: javax.swing.JList[String]) extends ListBox[javax.swing.JList[String], ListBoxBinding]{
 
-  def change(action: () => Unit): ListBoxBinding =  {
-    super.change(swingComponent, action)
+  def onChange(action: () => Unit): ListBoxBinding =  {
+    super.onChange(swingComponent, action)
     this
   }
 

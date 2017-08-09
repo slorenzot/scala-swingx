@@ -8,7 +8,7 @@ import java.awt.event.{ActionEvent, ActionListener}
 trait ToggleMenuItem[T <: javax.swing.AbstractButton, U] {
   private def source: T = this.asInstanceOf[T]
 
-  protected def click(source: T, action: () => Unit): U = {
+  protected def onClick(source: T, action: () => Unit): U = {
     source.addActionListener(new ActionListener() {
       override def actionPerformed(e: ActionEvent) = action.apply()
     })
@@ -16,19 +16,19 @@ trait ToggleMenuItem[T <: javax.swing.AbstractButton, U] {
     this.asInstanceOf[U]
   }
 
-  protected def change(source: T, action: () => Unit): U = {
+  protected def onChange(source: T, action: () => Unit): U = {
     source.addActionListener(new ActionListener {
       override def actionPerformed(actionEvent: ActionEvent) = action.apply()
     })
     this.asInstanceOf[U]
   }
 
-  protected def selected(source: T, action: () => Unit): U = change(source, () => {
+  protected def onSelect(source: T, action: () => Unit): U = onChange(source, () => {
     if (source.getModel().isSelected()) action.apply()
     this
   })
 
-  protected def unselected(source: T, action: () => Unit): U = change(source, () => {
+  protected def onUnselect(source: T, action: () => Unit): U = onChange(source, () => {
     if (!source.getModel().isSelected()) action.apply()
     this
   })

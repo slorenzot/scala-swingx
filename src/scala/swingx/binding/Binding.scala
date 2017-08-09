@@ -11,26 +11,26 @@ case class Binding[T<: javax.swing.JComponent](swingComponent: T,
     case "class javax.swing.JLabel" => {
       val source = swingComponent.asInstanceOf[javax.swing.JLabel]
       val label = new LabelBinding(source)
-      label.click(action)
+      label.onClick(action)
     }
 
     case "class javax.swing.JButton" => {
       val source = swingComponent.asInstanceOf[javax.swing.JButton]
       val button = new ButtonBinding(source)
-      button.click(action)
+      button.onClick(action)
     }
 
     case "class javax.swing.JCheckBoxMenuItem" => {
       val source = swingComponent.asInstanceOf[javax.swing.JCheckBoxMenuItem]
       val checkItem = new MenuCheckItemBinding(source)
-      checkItem.change(action)
+      checkItem.onChange(action)
     }
 
     case "class javax.swing.JRadioButtonMenuItem" |
          "class javax.swing.JMenuItem" => {
       val source = swingComponent.asInstanceOf[javax.swing.JMenuItem]
       val button = new MenuItemBinding(source)
-      button.click(action)
+      button.onClick(action)
     }
 
     case "class javax.swing.JTextField" |
@@ -40,25 +40,25 @@ case class Binding[T<: javax.swing.JComponent](swingComponent: T,
          "class javax.swing.JPasswordField" => {
       val source = swingComponent.asInstanceOf[javax.swing.text.JTextComponent]
       val textfield = new TextBinding(source)
-      textfield.change(action)
+      textfield.onChange(action)
     }
 
     case "class javax.swing.JList" => {
       val source = swingComponent.asInstanceOf[javax.swing.JList[String]]
       var listBinding = new ListBoxBinding(source)
-      listBinding.change(action)
+      listBinding.onChange(action)
     }
 
     case "class javax.swing.JSlider" => {
       val source = swingComponent.asInstanceOf[javax.swing.JSlider]
       val sliderBinding =  new SliderBinding(source)
-      sliderBinding.move(action)
+      sliderBinding.onMove(action)
     }
 
     case "class javax.swing.JTable" => {
       val source = swingComponent.asInstanceOf[javax.swing.JTable]
       val tableBinding = new TableBinding(source)
-      tableBinding.rowChange(action)
+      tableBinding.onChange(action)
     }
 
     case _ => require(false, s"=> ScalaSwingX No support Component: $swingComponent!")

@@ -11,7 +11,7 @@ trait Editable[T <: javax.swing.text.JTextComponent, U] {
 
   private var text = ""
 
-  protected def change(source: T, action: () => Unit): U = {
+  protected def onChange(source: T, action: () => Unit): U = {
     source.addKeyListener(new KeyListener() {
       override def keyPressed(e: KeyEvent): Unit = {}
 

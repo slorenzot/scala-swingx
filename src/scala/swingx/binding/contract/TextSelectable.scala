@@ -9,7 +9,7 @@ import scala.swingx.binding.contract.generic.Editable
   */
 trait TextSelectable[T <: javax.swing.text.JTextComponent, U] extends Editable[T, U] {
 
-  protected def select(source: T, action: (String) => Unit): U = {
+  protected def onSelect(source: T, action: (String) => Unit): U = {
     source.addCaretListener(new CaretListener() {
       override def caretUpdate(e: CaretEvent) = {
         val selection = source.getText.substring(Math.min(e.getDot, e.getMark), Math.max(e.getDot, e.getMark))
@@ -20,7 +20,7 @@ trait TextSelectable[T <: javax.swing.text.JTextComponent, U] extends Editable[T
     this.asInstanceOf[U]
   }
 
-  protected def unselect(source: T, action: () => Unit): U = {
+  protected def onUnselect(source: T, action: () => Unit): U = {
     source.addCaretListener(new CaretListener() {
       override def caretUpdate(e: CaretEvent) = {
         val hasSelection = (e.getDot == e.getMark)

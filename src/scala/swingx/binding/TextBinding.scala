@@ -15,18 +15,18 @@ case class TextBinding(swingComponent: javax.swing.text.JTextComponent)
 
   //  def caret(action: () => Unit): TextBinding = super.caret(swingComponent, action)
 
-  def select(action: (String) => Unit): TextBinding = {
-    super.select(swingComponent, action)
+  def onSelect(action: (String) => Unit): TextBinding = {
+    super.onSelect(swingComponent, action)
     this
   }
 
-  def unselect(action: () => Unit): TextBinding = {
-    super.unselect(swingComponent, action)
+  def onUnselect(action: () => Unit): TextBinding = {
+    super.onUnselect(swingComponent, action)
     this
   }
 
-  def change(action: () => Unit): TextBinding = {
-    super.change(swingComponent, action)
+  def onChange(action: () => Unit): TextBinding = {
+    super.onChange(swingComponent, action)
     this
   }
 

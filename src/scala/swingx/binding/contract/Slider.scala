@@ -10,7 +10,7 @@ trait Slider[T <: javax.swing.JSlider] {
 
   private def source: T = this.asInstanceOf[T]
 
-  protected def move(source: T, action: () => Unit): Slider[T] = {
+  protected def onMove(source: T, action: () => Unit): Slider[T] = {
     source.addChangeListener(new ChangeListener() {
       override def stateChanged(e: ChangeEvent) =
         if (!source.getValueIsAdjusting()) action.apply()

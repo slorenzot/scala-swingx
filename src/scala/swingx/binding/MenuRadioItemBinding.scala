@@ -8,8 +8,8 @@ import scala.swingx.binding.contract.{ToggleButton, ToggleMenuItem}
 case class MenuRadioItemBinding(swingComponent: javax.swing.JRadioButtonMenuItem)
   extends ToggleMenuItem[javax.swing.JRadioButtonMenuItem, MenuRadioItemBinding] {
 
-  def change(action: () => Unit): MenuRadioItemBinding = {
-    super.change(swingComponent, action)
+  def onChange(action: () => Unit): MenuRadioItemBinding = {
+    super.onChange(swingComponent, action)
   }
 
 }

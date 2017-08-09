@@ -11,28 +11,28 @@ trait ToggleButton[T <: javax.swing.AbstractButton] {
 
   private def source: T = this.asInstanceOf[T]
 
-  protected def click(source: T, action: () => Unit): ToggleButton[T] = {
+  protected def onClick(source: T, action: () => Unit): ToggleButton[T] = {
     source.addActionListener(new ActionListener() {
       override def actionPerformed(e: ActionEvent) = action.apply()
     })
     this
   }
 
-  protected def change(source: T, action: () => Unit): ToggleButton[T] = {
+  protected def onChange(source: T, action: () => Unit): ToggleButton[T] = {
     source.addActionListener(new ActionListener() {
       override def actionPerformed(actionEvent: ActionEvent) = action.apply()
     })
     this
   }
 
-  protected def selected(source: T, action: () => Unit): ToggleButton[T] =
-    change(source, () => {
+  protected def onSelect(source: T, action: () => Unit): ToggleButton[T] =
+    onChange(source, () => {
       if (source.getModel().isSelected()) action.apply()
       this
     })
 
-  protected def unselected(source: T, action: () => Unit): ToggleButton[T] =
-    change(source, () => {
+  protected def onUnselect(source: T, action: () => Unit): ToggleButton[T] =
+    onChange(source, () => {
       if (!source.getModel().isSelected()) action.apply()
       this
     })

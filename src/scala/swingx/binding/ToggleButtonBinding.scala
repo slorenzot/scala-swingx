@@ -10,25 +10,25 @@ import scala.swingx.binding.contract.ToggleButton
 case class ToggleButtonBinding(swingComponent: javax.swing.JToggleButton)
   extends ToggleButton[javax.swing.JToggleButton] {
 
-  def click(action: () => Unit): ToggleButtonBinding =  {
-    super.click(swingComponent, action)
+  def onClick(action: () => Unit): ToggleButtonBinding =  {
+    super.onClick(swingComponent, action)
     this
   }
 
-  def change(action: () => Unit): ToggleButtonBinding = {
-    super.change(swingComponent, action)
+  def onChange(action: () => Unit): ToggleButtonBinding = {
+    super.onChange(swingComponent, action)
     this
   }
 
-  def toggle(action: () => Unit): ToggleButtonBinding = this.change(action)
+  def onToggle(action: () => Unit): ToggleButtonBinding = this.onChange(action)
 
-  def selected(action: () => Unit): ToggleButtonBinding = {
-    super.selected(swingComponent, action)
+  def onSelect(action: () => Unit): ToggleButtonBinding = {
+    super.onSelect(swingComponent, action)
     this
   }
 
-  def unselected(action: () => Unit): ToggleButtonBinding = {
-    super.unselected(swingComponent, action)
+  def onUnselect(action: () => Unit): ToggleButtonBinding = {
+    super.onUnselect(swingComponent, action)
     this
   }
 

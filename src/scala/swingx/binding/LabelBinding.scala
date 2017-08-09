@@ -7,8 +7,8 @@ import scala.swingx.binding.contract.generic.Clickable
   */
 case class LabelBinding(swingComponent: javax.swing.JLabel) extends Clickable[javax.swing.JLabel, LabelBinding]{
 
-  def click(action: () => Unit): LabelBinding =  {
-    super.click(swingComponent, action)
+  def onClick(action: () => Unit): LabelBinding =  {
+    super.onClick(swingComponent, action)
     this
   }
 

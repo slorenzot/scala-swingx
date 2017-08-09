@@ -86,23 +86,24 @@ object Main extends App {
       .clear
       .columns(() => Array("Column1", "Column2"))
       .populate(() => Array(Array("Value1", "Value2")))
-//      .selectRow(() => println("Selected Row"))
-//      .selectCell((r, c) => println(s"Selected Cell $r, $c"))
-      .focus((value, row, col) => println(s"edited $value in $row, $col"))
-    Binding.of(f.jCheckBoxMenuItem1).change(() => SwingUtils.alert("Hi"))
+      //      .selectRow(() => println("Selected Row"))
+      .onChange(() => println(s"Selected"))
+      .onFocus(() => println("focused"))
+      .onEdit((value, row, col) => println(s"edited $value in $row, $col"))
+    Binding.of(f.jCheckBoxMenuItem1).onChange(() => SwingUtils.alert("Hi"))
     Binding.of(f.jToggleButton1)
-      .change(() => {
+      .onChange(() => {
         SwingUtils.withLocale().alert("Hi")
       })
-      .selected(() => console("Seleccionado"))
-      .unselected(() => console("Deseleccionado"))
+      .onSelect(() => console("Seleccionado"))
+      .onUnselect(() => console("Deseleccionado"))
 
     Binding.of(f.jTextField1)
-      .change(() => console(s"El texto cambio"))
-      .select(selected => console(selected))
+      .onChange(() => console(s"El texto cambio"))
+      .onSelect(selected => console(selected))
 
     Binding.of(f.jComboBox1)
-      .change(() => {
+      .onChange(() => {
         SwingUtils.pick("Pick One!", Array("One", "Two", "Three")) match {
           case Some(s) => console(s._2)
           case None =>
@@ -110,12 +111,12 @@ object Main extends App {
       })
 
     Binding.of(window.jCheckBoxMenuItem1)
-      .change(() => console("Cambio"))
+      .onChange(() => console("Cambio"))
 
     Binding.of(window.jTextPane1)
-      .select(selected => console(selected))
+      .onSelect(selected => console(selected))
     Binding.of(window.jTextArea1)
-      .select(selected => console(selected))
+      .onSelect(selected => console(selected))
 
   })
     //    .terminate(f => println(s"terminating $f..."))

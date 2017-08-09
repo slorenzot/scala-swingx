@@ -10,8 +10,8 @@ import scala.swingx.binding.contract.{ToggleButton, ToggleMenuItem}
 case class MenuCheckItemBinding(swingComponent: javax.swing.JCheckBoxMenuItem)
   extends ToggleMenuItem[javax.swing.JCheckBoxMenuItem, MenuCheckItemBinding] {
 
-  def change(action: () => Unit): MenuCheckItemBinding = {
-    super.change(swingComponent, action)
+  def onChange(action: () => Unit): MenuCheckItemBinding = {
+    super.onChange(swingComponent, action)
   }
 
 }

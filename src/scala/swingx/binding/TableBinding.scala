@@ -50,7 +50,7 @@ case class TableBinding(swingComponent: javax.swing.JTable) {
     this
   }
 
-  def cellChange(action: () => Unit): TableBinding = {
+  def onChange(action: (Int, Int) => Unit): TableBinding = {
     //    class EditableTableModel extends javax.swing.table.AbstractTableModel {
     //      var columnTitles: Array[String]
     //
@@ -103,15 +103,21 @@ case class TableBinding(swingComponent: javax.swing.JTable) {
     this
   }
 
-  def rowChange(action: () => Unit): TableBinding = {
+  def onChange(action: () => Unit): TableBinding = {
     source.getModel.addTableModelListener(new TableModelListener() {
+
+      private var selected: Array[Int] = Array.empty
+
       override def tableChanged(e: TableModelEvent) =
-        if (!source.getSelectionModel.getValueIsAdjusting) action.apply()
+        if (!source.getSelectionModel.getValueIsAdjusting) {
+          println(selected.length)
+          action.apply()
+        }
     })
     this
   }
 
-  def selectRow(action: () => Unit): TableBinding = {
+  def onFocus(action: () => Unit): TableBinding = {
     source.setRowSelectionAllowed(true)
     source.getSelectionModel.addListSelectionListener(new ListSelectionListener() {
       override def valueChanged(e: ListSelectionEvent) = {
@@ -122,7 +128,7 @@ case class TableBinding(swingComponent: javax.swing.JTable) {
     this
   }
 
-  def selectCell(action: (Int, Int) => Unit): TableBinding = {
+  def onFocus(action: (Int, Int) => Unit): TableBinding = {
     source.addMouseListener(new java.awt.event.MouseAdapter() {
       override def mouseClicked(e: java.awt.event.MouseEvent) {
         val row = source.rowAtPoint(e.getPoint())
@@ -133,7 +139,7 @@ case class TableBinding(swingComponent: javax.swing.JTable) {
     this
   }
 
-  def focus(action: (String, Int, Int) => Unit): TableBinding = {
+  def onEdit(action: (String, Int, Int) => Unit): TableBinding = {
     //    source.setColumnSelectionAllowed(false)
     source.setCellSelectionEnabled(true)
     source.getModel.addTableModelListener(new TableModelListener {
@@ -144,9 +150,9 @@ case class TableBinding(swingComponent: javax.swing.JTable) {
     this
   }
 
-  def blur(action: (String, Int, Int) => {}): TableBinding = ???
+  def onBlur(action: (String, Int, Int) => {}): TableBinding = ???
 
-  def unselect(action: () => Unit): TableBinding = {
+  def onUnselect(action: () => Unit): TableBinding = {
     source.getSelectionModel.addListSelectionListener(new ListSelectionListener() {
       override def valueChanged(e: ListSelectionEvent) = {
         if (!swingComponent.getSelectionModel.getValueIsAdjusting) println("Unselected")

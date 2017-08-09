@@ -7,8 +7,8 @@ import scala.swingx.binding.contract.ToggleComboBox
   */
 case class ComboBoxBinding(swingComponent: javax.swing.JComboBox[String]) extends ToggleComboBox[javax.swing.JComboBox[String], ComboBoxBinding]{
 
-  def change(action: () => Unit): ComboBoxBinding =  {
-    super.change(swingComponent, action)
+  def onChange(action: () => Unit): ComboBoxBinding =  {
+    super.onChange(swingComponent, action)
     this
   }
 

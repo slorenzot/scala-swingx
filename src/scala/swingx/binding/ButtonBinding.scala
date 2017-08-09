@@ -9,8 +9,8 @@ import scala.swingx.binding.contract.generic.Clickable
   */
 case class ButtonBinding(swingComponent: javax.swing.JButton) extends Clickable[javax.swing.JButton, ButtonBinding]{
 
-  def click(action: () => Unit): ButtonBinding =  {
-    super.click(swingComponent, action)
+  def onClick(action: () => Unit): ButtonBinding =  {
+    super.onClick(swingComponent, action)
     this
   }
 
