@@ -125,11 +125,6 @@ case class Dialog[T <: javax.swing.JDialog](val swingComponent: T,
     swingComponent.dispose
   }
 
-  def bind[U <: javax.swing.JComponent](component: U, action: () => Unit): Dialog[T] = {
-    new Binding[U](component, action)
-    this
-  }
-
 }
 
 object Dialog {
