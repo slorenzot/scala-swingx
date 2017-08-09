@@ -11,8 +11,13 @@ case class SliderBinding(swingComponent: javax.swing.JSlider) extends Slider[jav
 
   //  def caret(action: () => Unit): TextBinding = super.caret(swingComponent, action)
 
-  def onMove(action: () => Unit): Slider[JSlider] = {
+  def onMove(action: Int => Unit): SliderBinding = {
     super.onMove(swingComponent, action)
+    this
+  }
+
+  def whileMove(action: Int => Unit): SliderBinding = {
+    super.whileMove(swingComponent, action)
     this
   }
 

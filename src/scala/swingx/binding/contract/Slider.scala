@@ -8,12 +8,22 @@ import javax.swing.event.{ChangeEvent, ChangeListener}
   */
 trait Slider[T <: javax.swing.JSlider] {
 
-  private def source: T = this.asInstanceOf[T]
-
-  protected def onMove(source: T, action: () => Unit): Slider[T] = {
+  protected def onMove(source: T, action: Int => Unit): Slider[T] = {
     source.addChangeListener(new ChangeListener() {
-      override def stateChanged(e: ChangeEvent) =
-        if (!source.getValueIsAdjusting()) action.apply()
+      override def stateChanged(e: ChangeEvent) = {
+        val value = source.getValue
+        if (!source.getValueIsAdjusting()) action.apply(value)
+      }
+    })
+    this
+  }
+
+  protected def whileMove(source: T, action: Int => Unit): Slider[T] = {
+    source.addChangeListener(new ChangeListener() {
+      override def stateChanged(e: ChangeEvent) = {
+        val value = source.getValue
+        if (source.getValueIsAdjusting()) action.apply(value)
+      }
     })
     this
   }

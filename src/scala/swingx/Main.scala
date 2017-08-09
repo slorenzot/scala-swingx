@@ -11,7 +11,7 @@ object Main extends App {
 
   def console(t: String) = window.jTextArea2.append(s"$t\n")
 
-//  Frame.of(swingExample.Frame)
+  //  Frame.of(swingExample.Frame)
 
   Frame.of(window)
     .icon(SwingConstants.DEFAULT_ICON)
@@ -89,7 +89,8 @@ object Main extends App {
     //    Binding.of(window.jProgressBar1)
 
     Binding.of(window.jSlider1)
-      .onMove(() => println("n"))
+      .onMove(value => println(value))
+      .whileMove(value => println(value))
 
     Binding.of(window.jScrollPane1)
       .onHChange(() => println("Scrolled!"))
