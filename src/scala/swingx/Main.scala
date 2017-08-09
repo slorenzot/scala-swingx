@@ -83,11 +83,14 @@ object Main extends App {
     .prepare(f => {
     println(s"preparing $f...")
 
-//    Binding.of(window.jSpinner1)
+    //    Binding.of(window.jSpinner1)
 
-//    Binding.of(window.jProgressBar1)
+    //    Binding.of(window.jProgressBar1)
 
-//    Binding.of(window.jScrollPane7)
+    //    Binding.of(window.jScrollPane7)
+
+    Binding.of(window.jButton1)
+      .onClick(() => console("Click"))
 
     Binding.of(window.jTable1)
       .clear
@@ -101,9 +104,7 @@ object Main extends App {
     Binding.of(f.jCheckBoxMenuItem1).onChange(() => SwingUtils.alert("Hi"))
 
     Binding.of(f.jToggleButton1)
-      .onChange(() => {
-        SwingUtils.withLocale().alert("Hi")
-      })
+      .onChange(() => SwingUtils.withLocale().alert("Hi"))
       .onSelect(() => console("Seleccionado"))
       .onUnselect(() => console("Deseleccionado"))
 
