@@ -113,12 +113,14 @@ object Main extends App {
     Binding.of(f.jCheckBoxMenuItem1).onChange(() => SwingUtils.alert("Hi"))
 
     Binding.of(f.jToggleButton1)
-      .onChange(() => SwingUtils.withLocale().alert("Hi"))
+      .onChange(isSelected => {
+        SwingUtils.withLocale().alert("Hi")
+      })
       .onSelect(() => console("Seleccionado"))
       .onUnselect(() => console("Deseleccionado"))
 
     Binding.of(f.jTextField1)
-      .onChange(() => console(s"El texto cambio"))
+      .onChange(text => console(s"El texto cambio"))
       .onSelect(selected => console(selected))
 
     Binding.of(f.jComboBox1)

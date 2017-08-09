@@ -15,12 +15,12 @@ case class ToggleButtonBinding(swingComponent: javax.swing.JToggleButton)
     this
   }
 
-  def onChange(action: () => Unit): ToggleButtonBinding = {
+  def onChange(action: Boolean => Unit): ToggleButtonBinding = {
     super.onChange(swingComponent, action)
     this
   }
 
-  def onToggle(action: () => Unit): ToggleButtonBinding = this.onChange(action)
+  def onToggle(action: Boolean => Unit): ToggleButtonBinding = this.onChange(action)
 
   def onSelect(action: () => Unit): ToggleButtonBinding = {
     super.onSelect(swingComponent, action)
