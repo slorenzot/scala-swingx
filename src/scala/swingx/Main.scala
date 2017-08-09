@@ -90,7 +90,7 @@ object Main extends App {
     //    Binding.of(window.jScrollPane7)
 
     Binding.of(window.jButton1)
-      .onClick(() => console("Click"))
+      .onClick(() => SwingUtils.alert("Click"))
 
     Binding.of(window.jTable1)
       .clear
