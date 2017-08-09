@@ -144,4 +144,6 @@ object Frame {
     */
   def of[U <: javax.swing.JFrame](component: U): Frame[U] = new Frame[U](component)
 
+  def of[U <: javax.swing.JFrame](clazz: Class[U]): Frame[U] = Frame.of(clazz.newInstance())
+
 }

@@ -1,7 +1,6 @@
 package scala.swingx
 
-import scala.reflect.io.File
-import scala.swingx.binding.{Binding, ButtonBinding, MenuCheckItemBinding}
+import scala.swingx.binding.Binding
 import scala.swingx.utils.{SwingConstants, SwingUtils}
 
 /**
@@ -11,6 +10,8 @@ object Main extends App {
   val window: swingExample.Frame = new swingExample.Frame()
 
   def console(t: String) = window.jTextArea2.append(s"$t\n")
+
+//  Frame.of(swingExample.Frame)
 
   Frame.of(window)
     .icon(SwingConstants.DEFAULT_ICON)
@@ -87,10 +88,18 @@ object Main extends App {
 
     //    Binding.of(window.jProgressBar1)
 
-    //    Binding.of(window.jScrollPane7)
+    Binding.of(window.jSlider1)
+      .onMove(() => println("n"))
+
+    Binding.of(window.jScrollPane1)
+      .onHChange(() => println("Scrolled!"))
+      .onVChange(() => println("Scrolled!"))
 
     Binding.of(window.jButton1)
-      .onClick(() => SwingUtils.alert("Click"))
+      .onClick(() => {
+        SwingUtils.alert("Click")
+        console("Text")
+      })
 
     Binding.of(window.jTable1)
       .clear

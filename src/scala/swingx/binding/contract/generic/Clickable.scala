@@ -16,12 +16,8 @@ trait Clickable[T <: javax.swing.JComponent, U] {
       override def mouseClicked(mouseEvent: MouseEvent): Unit = {
         source.setEnabled(false)
         try action.apply()
-        catch {
-          case _ => _
-        }
-        finally {
-          source.setEnabled(true)
-        }
+        finally source.setEnabled(true)
+
       }
     })
 
