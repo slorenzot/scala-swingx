@@ -84,7 +84,8 @@ object Main extends App {
     .prepare(f => {
     println(s"preparing $f...")
 
-    //    Binding.of(window.jSpinner1)
+    Binding.of(window.jSpinner1)
+      .onChange(value => println(value))
 
     //    Binding.of(window.jProgressBar1)
 
