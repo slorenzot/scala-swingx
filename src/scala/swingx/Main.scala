@@ -11,7 +11,8 @@ object Main extends App {
 
   def console(t: String) = window.jTextArea2.append(s"$t\n")
 
-  //  Frame.of(swingExample.Frame)
+  Frame.of(classOf[swingExample.Frame])
+    .show()
 
   Frame.of(window)
     .icon(SwingConstants.DEFAULT_ICON)

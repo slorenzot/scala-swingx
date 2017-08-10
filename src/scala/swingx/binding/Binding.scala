@@ -36,3 +36,5 @@ object Binding {
   def of(swingComponent: javax.swing.JSlider) = new SliderBinding(swingComponent)
 
 }
+
+trait Bindable

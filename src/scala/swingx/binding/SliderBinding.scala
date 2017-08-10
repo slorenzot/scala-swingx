@@ -7,7 +7,8 @@ import scala.swingx.binding.contract.{Sliderable, TextSelectable}
 /**
   * Created by Soulberto Lorenzo on 7/28/2017.
   */
-case class SliderBinding(swingComponent: javax.swing.JSlider) extends Sliderable[javax.swing.JSlider] {
+case class SliderBinding(swingComponent: javax.swing.JSlider) extends Bindable
+  with Sliderable[javax.swing.JSlider] {
 
   //  def caret(action: () => Unit): TextBinding = super.caret(swingComponent, action)
 

@@ -4,7 +4,7 @@ import java.awt.Component
 import java.awt.event.{WindowAdapter, WindowEvent, WindowStateListener}
 import javax.swing.{ImageIcon, WindowConstants}
 
-import scala.swingx.binding.Binding
+import scala.swingx.binding.{Bindable, Binding}
 import scala.swingx.binding.contract.Windowable
 import scala.swingx.utils.{SwingConstants, SwingUtils}
 import scala.util.Try
@@ -16,15 +16,15 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
                                           var parent: Option[Component] = Option(null)) extends Windowable {
 
   protected var lastState: Integer = swingComponent.getExtendedState
+
   private var _initialize: T => Unit = swingComponent => Unit
   private var _finalize: T => Unit = swingComponent => Unit
 
-  swingComponent.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
+  swingComponent.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE)
 
   swingComponent.addWindowStateListener(new WindowStateListener {
-    override def windowStateChanged(windowEvent: WindowEvent) = {
-      lastState = windowEvent.getOldState
-    }
+    override def windowStateChanged(windowEvent: WindowEvent) = lastState = windowEvent.getOldState
+
   })
 
   def title(title: String): Frame[T] = {
@@ -51,6 +51,8 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
     swingComponent.toFront
     swingComponent.requestFocusInWindow
   }
+
+  def closeOperation(operation: Int =WindowConstants.HIDE_ON_CLOSE) = swingComponent.setDefaultCloseOperation(operation)
 
   def close(confirm: Boolean = false): Unit = if (confirm) confirmClosing() else dispose
 
@@ -89,7 +91,7 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
 
   def opened[U](action: (T) => Unit): Frame[T] = {
     swingComponent.addWindowListener(new WindowAdapter() {
-      override def windowOpened(e: WindowEvent): Unit = action.apply(swingComponent)
+      override def windowOpened(e: WindowEvent) = action.apply(swingComponent)
     })
     this
   }
@@ -98,7 +100,7 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
     swingComponent.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
 
     swingComponent.addWindowListener(new WindowAdapter() {
-      override def windowClosing(e: WindowEvent): Unit =
+      override def windowClosing(e: WindowEvent) =
         if (dialog.apply() == SwingConstants.YES) dispose
     })
     this
@@ -106,14 +108,14 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
 
   def closing[U](action: (T) => Unit): Frame[T] = {
     swingComponent.addWindowListener(new WindowAdapter() {
-      override def windowClosing(e: WindowEvent): Unit = action.apply(swingComponent)
+      override def windowClosing(e: WindowEvent) = action.apply(swingComponent)
     })
     this
   }
 
   def closed[U](action: (T) => Unit): Frame[T] = {
     swingComponent.addWindowListener(new WindowAdapter() {
-      override def windowClosing(e: WindowEvent): Unit = action.apply(swingComponent)
+      override def windowClosing(e: WindowEvent) = action.apply(swingComponent)
     })
     this
   }
@@ -128,8 +130,8 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
     this
   }
 
-//  def bind[U <: javax.swing.JComponent, V](component: U): Binding[U] = {
-//    Binding.of(component)
+//  def bind[U <: javax.swing.JComponent, V](component: U): Bindable[U] = {
+//    Binding.of(classOf[component])
 //  }
 
 }
@@ -144,6 +146,8 @@ object Frame {
     */
   def of[U <: javax.swing.JFrame](component: U): Frame[U] = new Frame[U](component)
 
-  def of[U <: javax.swing.JFrame](clazz: Class[U]): Frame[U] = Frame.of(clazz.newInstance())
+  def of[U <: javax.swing.JFrame](clazz: Class[U]): Frame[U] = {
+    try new Frame[U](clazz.newInstance())
+  }
 
 }

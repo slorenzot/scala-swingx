@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel
 /**
   * Created by Soulberto Lorenzo on 8/5/2017.
   */
-case class TableBinding(swingComponent: javax.swing.JTable) {
+case class TableBinding(swingComponent: javax.swing.JTable) extends Bindable {
 
   private def source: javax.swing.JTable = swingComponent
 
