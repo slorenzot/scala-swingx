@@ -178,4 +178,36 @@ object SwingUtils {
     }
   }
 
+//  def monitor(title: String, message: String, action: () => Unit = () => {}) = {
+//    val min = 0
+//    val max = 100
+//    val messages = Array("Performing Iterations.", "Wait for completion…….")
+//    val monitor = new ProgressMonitor(frame, message, "Iteration", min, max);
+//    final Runnable runnable = new Runnable()
+//    {
+//      public void run()
+//      {
+//        int sleepTime = 500;
+//        for(int i = 1; i < 100; i++)
+//        {
+//          try
+//          {
+//            monitor.setNote("Iteration " + i);
+//            monitor.setProgress(i);
+//
+//            if (monitor.isCanceled())
+//            {
+//              monitor.setProgress(100);
+//              break;
+//            }
+//            Thread.sleep( sleepTime);
+//          }
+//          catch (InterruptedException e) { }
+//        }
+//        monitor.close();
+//      }
+//    }
+//
+//  }
+
 }
