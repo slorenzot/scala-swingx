@@ -88,6 +88,9 @@ object Main extends App {
 
     //    Binding.of(window.jProgressBar1)
 
+    Binding.of(window.jSplitPane1)
+      .onResize(value => println(value))
+
     Binding.of(window.jSlider1)
       .onMove(value => println(value))
       .whileMove(value => println(value))

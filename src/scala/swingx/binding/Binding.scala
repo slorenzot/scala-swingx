@@ -1,13 +1,15 @@
 package scala.swingx.binding
 
-import javax.swing.JScrollPane
+import javax.swing.{JScrollPane, JSplitPane}
 
 /**
   * Created by Soulberto Lorenzo on 7/27/2017.
   */
 object Binding {
-  def of(swingComponent: JScrollPane) = new ScrollBinding(swingComponent)
 
+  def of(swingComponent: javax.swing.JSplitPane) = new SplitBinding(swingComponent)
+
+  def of(swingComponent: javax.swing.JScrollPane) = new ScrollBinding(swingComponent)
 
   def of(swingComponent: javax.swing.JButton) = new ButtonBinding(swingComponent)
 
