@@ -1,10 +1,8 @@
 package scala.swingx.binding
 
-import java.awt.Component
-import java.awt.event.{KeyEvent, KeyListener}
-import javax.swing.{ListSelectionModel, SwingUtilities}
 import javax.swing.event.{ListSelectionEvent, ListSelectionListener, TableModelEvent, TableModelListener}
 import javax.swing.table.DefaultTableModel
+import javax.swing.{ListSelectionModel, SwingUtilities}
 
 /**
   * Created by Soulberto Lorenzo on 8/5/2017.

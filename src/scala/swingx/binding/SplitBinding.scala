@@ -6,7 +6,7 @@ import javax.swing.JSplitPane
 /**
   * Created by Soulberto Lorenzo on 8/9/2017.
   */
-case class SplitBinding(swingComponent: JSplitPane) {
+case class SplitBinding(swingComponent: JSplitPane) extends Bindable {
 
   def onResize(action: (Int) => Unit): SplitBinding = {
     swingComponent.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY, new PropertyChangeListener() {

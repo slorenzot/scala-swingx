@@ -9,8 +9,8 @@ import scala.swingx.binding.contract.generic.Editable
 /**
   * Created by Soulberto Lorenzo on 7/28/2017.
   */
-case class TextBinding(swingComponent: javax.swing.text.JTextComponent)
-  extends Editable[javax.swing.text.JTextComponent, TextBinding]
+case class TextBinding(swingComponent: javax.swing.text.JTextComponent) extends Bindable
+    with Editable[javax.swing.text.JTextComponent, TextBinding]
     with TextSelectable[javax.swing.text.JTextComponent, TextBinding] {
 
   //  def caret(action: () => Unit): TextBinding = super.caret(swingComponent, action)

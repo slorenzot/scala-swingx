@@ -89,7 +89,7 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
     this
   }
 
-  def opened[U](action: (T) => Unit): Frame[T] = {
+  def onOpen[U](action: (T) => Unit): Frame[T] = {
     swingComponent.addWindowListener(new WindowAdapter() {
       override def windowOpened(e: WindowEvent) = action.apply(swingComponent)
     })
@@ -106,14 +106,14 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
     this
   }
 
-  def closing[U](action: (T) => Unit): Frame[T] = {
+  def onClosing[U](action: (T) => Unit): Frame[T] = {
     swingComponent.addWindowListener(new WindowAdapter() {
       override def windowClosing(e: WindowEvent) = action.apply(swingComponent)
     })
     this
   }
 
-  def closed[U](action: (T) => Unit): Frame[T] = {
+  def onClose[U](action: (T) => Unit): Frame[T] = {
     swingComponent.addWindowListener(new WindowAdapter() {
       override def windowClosing(e: WindowEvent) = action.apply(swingComponent)
     })
