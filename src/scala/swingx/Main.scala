@@ -121,6 +121,7 @@ object Main extends App {
 
     Binding.of(f.jTextField1)
       .onChange(text => console(s"El texto cambio"))
+      .whileTyping(text => console(s"=> $text"))
       .onSelect(selected => console(selected))
 
     Binding.of(f.jComboBox1)

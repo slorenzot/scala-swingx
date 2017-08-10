@@ -30,4 +30,9 @@ case class TextBinding(swingComponent: javax.swing.text.JTextComponent)
     this
   }
 
+  def whileTyping(action: String => Unit): TextBinding = {
+    super.whileTyping(swingComponent, action)
+    this
+  }
+
 }
