@@ -1,5 +1,7 @@
 package scala.swingx
 
+import javax.swing.WindowConstants
+
 import scala.swingx.binding.Binding
 import scala.swingx.utils.{SwingConstants, SwingUtils}
 
@@ -12,6 +14,7 @@ object Main extends App {
   def console(t: String) = window.jTextArea2.append(s"$t\n")
 
   Frame.of(classOf[swingExample.Frame])
+    .closeOperation(WindowConstants.HIDE_ON_CLOSE)
     .show()
 
   Frame.of(window)

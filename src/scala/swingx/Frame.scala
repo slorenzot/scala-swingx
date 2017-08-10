@@ -20,7 +20,7 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
   private var _initialize: T => Unit = swingComponent => Unit
   private var _finalize: T => Unit = swingComponent => Unit
 
-  swingComponent.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE)
+  swingComponent.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
 
   swingComponent.addWindowStateListener(new WindowStateListener {
     override def windowStateChanged(windowEvent: WindowEvent) = lastState = windowEvent.getOldState
@@ -52,7 +52,10 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
     swingComponent.requestFocusInWindow
   }
 
-  def closeOperation(operation: Int =WindowConstants.HIDE_ON_CLOSE) = swingComponent.setDefaultCloseOperation(operation)
+  def closeOperation(operation: Int = WindowConstants.EXIT_ON_CLOSE) = {
+    swingComponent.setDefaultCloseOperation(operation)
+    this
+  }
 
   def close(confirm: Boolean = false): Unit = if (confirm) confirmClosing() else dispose
 
@@ -130,9 +133,9 @@ case class Frame[T <: javax.swing.JFrame](val swingComponent: T,
     this
   }
 
-//  def bind[U <: javax.swing.JComponent, V](component: U): Bindable[U] = {
-//    Binding.of(classOf[component])
-//  }
+  //  def bind[U <: javax.swing.JComponent, V](component: U): Bindable[U] = {
+  //    Binding.of(classOf[component])
+  //  }
 
 }
 
