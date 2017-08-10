@@ -9,8 +9,7 @@ Welcome to ScalaSwingX, this scala library has a purpose make easy implement fas
 ### How do I get set up? ###
 
 * Only clone this repo using command line as follow: git clone https://bitbucket.org/slorenzot/scala-swingx
-* No need extra configuration, import and use
-* Scala Base and Java Swing Library, of course
+* No need extra configuration, import and use, just Scala Base and Java Swing Library included in JDK/JRE on JVM, of course
 * No Database configuration for now
 
 ### Contribution guidelines ###
