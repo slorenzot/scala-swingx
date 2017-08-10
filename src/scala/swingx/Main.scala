@@ -92,9 +92,8 @@ object Main extends App {
       .onMove(value => println(value))
       .whileMove(value => println(value))
 
-    Binding.of(window.jScrollPane1)
-      .onHChange(() => println("Scrolled!"))
-      .onVChange(() => println("Scrolled!"))
+    Binding.of(window.jScrollPane7)
+      .onChange((value, orientation, adjustType) => println(s"Scrolled $value px $orientation"))
 
     Binding.of(window.jButton1)
       .onClick(() => {

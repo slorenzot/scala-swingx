@@ -6,9 +6,9 @@ import javax.swing.event.{ChangeEvent, ChangeListener}
 /**
   * Created by Soulberto Lorenzo on 8/1/2017.
   */
-trait Slider[T <: javax.swing.JSlider] {
+trait Sliderable[T <: javax.swing.JSlider] {
 
-  protected def onMove(source: T, action: Int => Unit): Slider[T] = {
+  protected def onMove(source: T, action: Int => Unit): Sliderable[T] = {
     source.addChangeListener(new ChangeListener() {
       override def stateChanged(e: ChangeEvent) = {
         val value = source.getValue
@@ -18,7 +18,7 @@ trait Slider[T <: javax.swing.JSlider] {
     this
   }
 
-  protected def whileMove(source: T, action: Int => Unit): Slider[T] = {
+  protected def whileMove(source: T, action: Int => Unit): Sliderable[T] = {
     source.addChangeListener(new ChangeListener() {
       override def stateChanged(e: ChangeEvent) = {
         val value = source.getValue
